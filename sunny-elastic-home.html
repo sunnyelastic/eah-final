@@ -2556,63 +2556,10 @@ footer {
 
 
 /* ── Static callout labels (drag me / click me) ── */
-.ex-callout {
-  position: absolute;
-  display: inline-flex;
-  align-items: center;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  line-height: 1;
-  pointer-events: none;
-  z-index: 5;
-  white-space: nowrap;
-}
-.ex-callout-text { position: relative; z-index: 1; }
 
 /* ── Drag me: teal pill, with 6-dot drag-handle icon attached LEFT ── */
-.ex-callout--drag-me {
-  background: #00D9CE;             /* brighter teal */
-  color: #111010;
-  padding: 8px 20px;               /* matches click-me sizing */
-  font-size: 14px;                 /* matches click-me */
-  top: 380px;                      /* sits in the gap between Apps & Notebook panels */
-  left: -104px;                    /* far left into the section whitespace */
-}
-.ex-callout-drag-icon {
-  position: absolute;
-  top: -18px;
-  right: -22px;
-  left: auto;
-  width: 32px;
-  height: 42px;
-  shape-rendering: crispEdges;
-  image-rendering: pixelated;
-  transform: scaleX(-1) rotate(8deg);   /* mirror + slight tilt (mirror of click-me's -8deg) */
-  transform-origin: 70% 30%;
-}
 
 /* ── Click me: yellow pill, SMALLER, with pixel cursor on UPPER-LEFT ── */
-.ex-callout--click-me {
-  background: #F5DD2C;             /* bright yellow */
-  color: #111010;
-  padding: 8px 20px;               /* smaller padding (was 12/28) */
-  font-size: 14px;                 /* smaller font (was 20) */
-  top: 600px;
-  right: 240px;
-}
-.ex-callout--click-me .ex-callout-cursor {
-  position: absolute;
-  top: -18px;                      /* sits ABOVE pill */
-  left: -22px;                     /* sits LEFT of pill — overlap upper-left corner */
-  right: auto;
-  width: 32px;                     /* smaller cursor (was 44) */
-  height: 42px;
-  shape-rendering: crispEdges;
-  image-rendering: pixelated;
-  transform: rotate(-8deg);        /* slight tilt to match reference */
-  transform-origin: 30% 30%;
-}
 
 
 /* Author name — clickable link inside cards */
@@ -3108,25 +3055,6 @@ a.kb-card:hover { text-decoration: none; }
   </svg>
   <div class="examples-bg-inner">
     <!-- Static UI annotation callouts -->
-    <div class="ex-callout ex-callout--drag-me" aria-hidden="true">
-      <svg class="ex-callout-drag-icon" viewBox="-2 -2 14 18" xmlns="http://www.w3.org/2000/svg">
-        <!-- Same cursor as click-me, mirrored to point RIGHT -->
-        <polygon points="2,1 2,12 5,9 6,14 8,13 6,9 10,8"
-                 fill="#000000" stroke="#FFFFFF" stroke-width="2"
-                 paint-order="stroke fill" stroke-linejoin="miter"/>
-      </svg>
-      <span class="ex-callout-text">drag me</span>
-    </div>
-    <div class="ex-callout ex-callout--click-me" aria-hidden="true">
-      <svg class="ex-callout-cursor" viewBox="-2 -2 14 18" xmlns="http://www.w3.org/2000/svg">
-        <!-- Black cursor with crisp WHITE outline (paint-order: stroke behind fill) -->
-        <polygon points="2,1 2,12 5,9 6,14 8,13 6,9 10,8"
-                 fill="#000000" stroke="#FFFFFF" stroke-width="2"
-                 paint-order="stroke fill" stroke-linejoin="miter"/>
-      </svg>
-      <span class="ex-callout-text">click me</span>
-    </div>
-
 
     <!-- Panel 1: Prompt Library -->
     <div class="ex-link-wrap ex-draggable" data-pos="1" style="grid-column: 7 / span 6; grid-row: 1 / span 2;">
