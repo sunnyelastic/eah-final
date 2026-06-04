@@ -1048,7 +1048,15 @@ a.blog-sort-opt:focus-visible {
   margin: 0 auto var(--space-12, 48px);
   padding: 0 var(--grid-margin, 96px);
   display: grid;
-  grid-template-columns: 1fr auto;     </style>
+  grid-template-columns: 1fr auto;     
+/* Tags row below article head — links to tag results page */
+.article-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2, 8px);
+  margin-bottom: var(--space-6, 24px);
+}
+</style>
 </head>
 <body>
 
@@ -1131,7 +1139,7 @@ a.blog-sort-opt:focus-visible {
       <a class="secondary-nav__section" href="sunny-elastic-results.html">Blog</a>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#tutorial">Tutorial</a>
       <a class="secondary-nav__section is-active" href="sunny-elastic-home.html#examples">Examples</a>
-      <a class="secondary-nav__section" href="sunny-elastic-integration.html">Integration</a>
+      <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integration</a>
     </div>
   </div>
 </nav>
@@ -1223,6 +1231,12 @@ a.blog-sort-opt:focus-visible {
       <div class="article-page__article-head">
         <span class="meta">Prompt</span>
         <span class="article-page__expand-ico" aria-hidden="true"></span>
+      </div>
+
+      <div class="article-tags-row">
+        <a class="tag-pill" href="sunny-elastic-tag.html?tag=AI">AI</a>
+        <a class="tag-pill" href="sunny-elastic-tag.html?tag=Evaluation">Evaluation</a>
+        <a class="tag-pill" href="sunny-elastic-tag.html?tag=Prompts">Prompts</a>
       </div>
 
       <p>This prompt generates a curated set of "seed" Elasticsearch index queries you can use to bootstrap evaluation datasets &mdash; the kind of query-document pairs that get fed into retrieval-quality benchmarks, A/B test harnesses, or ELSER fine-tuning loops.</p>
