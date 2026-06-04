@@ -184,7 +184,7 @@ a { text-decoration: none; color: inherit; }
 .article-page {
   max-width: 1240px;           /* ~200px smaller than 1440 */
   margin: 0 auto;
-  padding: 64px var(--grid-margin) 96px;
+  padding: 64px var(--grid-margin, 96px) 96px 0;
   position: relative;
 }
 
@@ -239,7 +239,7 @@ a { text-decoration: none; color: inherit; }
 .article-page__meta {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: var(--space-12);
+  column-gap: var(--space-24, 96px);     /* 96px between nav and article */
   row-gap: var(--space-8);
   align-items: start;
 }
@@ -291,13 +291,13 @@ a { text-decoration: none; color: inherit; }
 .article-page__body {
   display: grid;
   grid-template-columns: 200px 1fr;   /* Article column wider */
-  column-gap: var(--space-12);        /* 48px — tighter */
+  column-gap: var(--space-24, 96px);     /* 96px between nav and article */
   align-items: start;
   margin-top: var(--space-8);         /* 32px — tighter from meta */
 }
 
 /* Left: Jump-to nav */
-.article-page__nav { position: sticky; top: 40px; }
+.article-page__nav { position: sticky; top: 80px; }
 /* nav-group__head--static removed — replaced by .article-page__nav-head wrapper */
 .nav-items { list-style: none; padding: 0; margin: 0; }
 .nav-items li { padding: 4px 0; }
@@ -1069,7 +1069,7 @@ footer {
       <a class="secondary-nav__section" href="sunny-elastic-results.html">Blog</a>
       <a class="secondary-nav__section is-active" href="sunny-elastic-home.html#tutorial">Tutorial</a>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#examples">Examples</a>
-      <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integration</a>
+      <a class="secondary-nav__section" href="sunny-elastic-integration.html">Integration</a>
     </div>
   </div>
 </nav>
