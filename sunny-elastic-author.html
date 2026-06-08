@@ -678,7 +678,6 @@ footer {
 }
 .kb-panel-hd {
   display: flex;
-  align-items: baseline;
   gap: var(--space-6);
   margin-bottom: var(--space-8);
 }
@@ -1027,8 +1026,6 @@ footer {
   color: inherit;
   transition: opacity 0.18s;
 }
-.fig-card:hover .fig-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
 /* Top label row */
 .fig-label-row {
   display: flex;
@@ -1192,8 +1189,6 @@ footer {
   color: inherit;
   transition: opacity 0.18s;
 }
-.fig-card-clean:hover .fig-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
 /* ── FEATURED label row (dashes only, no squares) ── */
 .fig-featured-row {
   display: flex;
@@ -1328,7 +1323,6 @@ footer {
   transition: opacity 0.15s;
 }
 
-.hero-list-item:hover .hero-list-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 .hero-list-thumb {
   width: 80px;
   height: 60px;
@@ -1585,23 +1579,22 @@ footer {
 }
 .section-strip-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 68px;
+  font-size: 72px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--black);
   line-height: 1.05;
   display: inline-flex;
-  align-items: flex-start;    /* top-align // with title */
   margin: 0;
 }
 .section-strip-slash {
   color: var(--black);
-  font-weight: 700;
+  font-weight: 600;                                     /* match title weight */
   margin-right: 12px;
   opacity: 1;
   font-family: 'Space Grotesk', var(--font-mono), monospace;
-  font-size: 63px;
-  line-height: 1;
+  font-size: 60px;                                      /* matches title; baseline-align handles cap-height visual */
+  line-height: 1.05;                                    /* match title line-height */
 }
 .section-strip-link {
   display: inline-flex;
@@ -1638,7 +1631,6 @@ footer {
 }
 .fp-hd {
   display: flex;
-  align-items: baseline;
   margin-bottom: var(--space-8);
 }
 .fp-hd-title {
@@ -2885,6 +2877,32 @@ footer {
 }
 }
 
+
+
+/* Precise hover — only the element under the cursor gets underlined */
+.fig-card-clean .fig-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.fig-card-clean .fig-author-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+
+/* Precise hover on hero list — title and author underline independently */
+.hero-list-item .hero-list-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.hero-list-item .fig-author-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
 
 </style>
 </head>
