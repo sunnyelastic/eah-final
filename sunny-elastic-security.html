@@ -676,7 +676,6 @@ footer {
 }
 .kb-panel-hd {
   display: flex;
-  align-items: baseline;
   gap: var(--space-6);
   margin-bottom: var(--space-8);
 }
@@ -1025,8 +1024,6 @@ footer {
   color: inherit;
   transition: opacity 0.18s;
 }
-.fig-card:hover .fig-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
 /* Top label row */
 .fig-label-row {
   display: flex;
@@ -1190,8 +1187,6 @@ footer {
   color: inherit;
   transition: opacity 0.18s;
 }
-.fig-card-clean:hover .fig-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
 /* ── FEATURED label row (dashes only, no squares) ── */
 .fig-featured-row {
   display: flex;
@@ -1326,7 +1321,6 @@ footer {
   transition: opacity 0.15s;
 }
 
-.hero-list-item:hover .hero-list-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 .hero-list-thumb {
   width: 80px;
   height: 60px;
@@ -1583,23 +1577,22 @@ footer {
 }
 .section-strip-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 68px;
+  font-size: 72px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--black);
   line-height: 1.05;
   display: inline-flex;
-  align-items: flex-start;    /* top-align // with title */
   margin: 0;
 }
 .section-strip-slash {
   color: var(--black);
-  font-weight: 700;
+  font-weight: 600;                                     /* match title weight */
   margin-right: 12px;
   opacity: 1;
   font-family: 'Space Grotesk', var(--font-mono), monospace;
-  font-size: 63px;
-  line-height: 1;
+  font-size: 60px;                                      /* matches title; baseline-align handles cap-height visual */
+  line-height: 1.05;                                    /* match title line-height */
 }
 .section-strip-link {
   display: inline-flex;
@@ -1636,7 +1629,6 @@ footer {
 }
 .fp-hd {
   display: flex;
-  align-items: baseline;
   margin-bottom: var(--space-8);
 }
 .fp-hd-title {
@@ -3268,6 +3260,59 @@ a.blog-filter-opt--has-submenu:focus-visible span {
   background: var(--black, #111010);
   color: var(--white, #FFF);
 }
+
+/* Precise hover — only the element under the cursor gets underlined */
+.fig-card-clean .fig-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.fig-card-clean .fig-author-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+
+/* Precise hover on hero list — title and author underline independently */
+.hero-list-item .hero-list-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.hero-list-item .fig-author-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+
+/* View all articles CTA — at bottom of hero-list */
+.hero-list-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  margin-top: var(--space-6, 24px);
+  padding: var(--space-3, 12px) 0;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #0B64DD;
+  text-decoration: none;
+  transition: color 0.15s, transform 0.15s;
+  align-self: flex-start;
+}
+.hero-list-view-all:hover {
+  color: #094FB0;
+  transform: translateX(2px);
+}
+.hero-list-view-all .px-arrow {
+  width: 16px;
+  height: 16px;
+  shape-rendering: crispEdges;
+}
 </style>
 </head>
 <body>
@@ -3372,8 +3417,35 @@ a.blog-filter-opt--has-submenu:focus-visible span {
   <!-- LEFT: Featured article — existing fig-card format -->
   <div class="hero-left">
     <a href="sunny-elastic-article.html" class="fig-card-clean">
-      <div class="fig-img-border" style="aspect-ratio:16/9;">
-        <div class="fig-img-placeholder ph-3" style="aspect-ratio:16/9;"></div>
+      <div class="fig-img-border" style="aspect-ratio:16/9; overflow:hidden;">
+        <div style="width:100%; height:100%; line-height:0;">
+          <svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice" viewBox="0 0 640 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="640" height="360" fill="#F990C6"/>
+<g clip-path="url(#clip0_2482_2376)">
+<mask id="mask0_2482_2376" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="170" y="30" width="300" height="300">
+<path d="M470 30H170V330H470V30Z" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_2482_2376)">
+<path d="M633.5 1.5H65V478.5H633.5V1.5Z" fill="#F990C6"/>
+</g>
+<mask id="mask1_2482_2376" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="170" y="30" width="300" height="300">
+<path d="M470 30H170V330H470V30Z" fill="white"/>
+</mask>
+<g mask="url(#mask1_2482_2376)">
+<path d="M470 30H170V330H470V30Z" fill="#F990C6"/>
+<path d="M173 33L254 114" stroke="white" stroke-width="6"/>
+<path d="M371 231L467 327" stroke="white" stroke-width="6"/>
+<path d="M284.001 113.999L307.273 90.7272C314.302 83.6977 325.699 83.6977 332.728 90.7272L409.275 167.273C416.304 174.302 416.304 185.699 409.275 192.728L332.728 269.275C325.699 276.304 314.302 276.304 307.273 269.275L230.727 192.728C223.698 185.699 223.698 174.302 230.727 167.273L253.359 144.641" stroke="white" stroke-width="6"/>
+<path d="M269 150C280.598 150 290 140.598 290 129C290 117.402 280.598 108 269 108C257.402 108 248 117.402 248 129C248 140.598 257.402 150 269 150Z" stroke="white" stroke-width="6"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_2482_2376">
+<rect width="300" height="300" fill="white" transform="translate(170 30)"/>
+</clipPath>
+</defs>
+</svg>
+        </div>
       </div>
       <div class="fig-tag-wrap" style="gap:12px;">
         <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
@@ -3459,6 +3531,17 @@ a.blog-filter-opt--has-submenu:focus-visible span {
           <span class="fig-date">Mar 31, 2025</span>
         </div>
       </div>
+    </a>
+
+    <a href="sunny-elastic-results.html?lab=security" class="hero-list-view-all">
+      View all articles
+      <svg class="px-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="0"  y="6"  width="12" height="6" fill="currentColor"/>
+        <rect x="9"  y="3"  width="3"  height="3" fill="currentColor"/>
+        <rect x="12" y="6"  width="3"  height="3" fill="currentColor"/>
+        <rect x="12" y="9"  width="3"  height="3" fill="currentColor"/>
+        <rect x="9"  y="12" width="3"  height="3" fill="currentColor"/>
+      </svg>
     </a>
 
   </div>
