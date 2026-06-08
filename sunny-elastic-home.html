@@ -676,7 +676,6 @@ footer {
 }
 .kb-panel-hd {
   display: flex;
-  align-items: baseline;
   gap: var(--space-6);
   margin-bottom: var(--space-8);
 }
@@ -1025,8 +1024,6 @@ footer {
   color: inherit;
   transition: opacity 0.18s;
 }
-.fig-card:hover .fig-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
 /* Top label row */
 .fig-label-row {
   display: flex;
@@ -1190,8 +1187,6 @@ footer {
   color: inherit;
   transition: opacity 0.18s;
 }
-.fig-card-clean:hover .fig-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
 /* ── FEATURED label row (dashes only, no squares) ── */
 .fig-featured-row {
   display: flex;
@@ -1326,7 +1321,6 @@ footer {
   transition: opacity 0.15s;
 }
 
-.hero-list-item:hover .hero-list-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 .hero-list-thumb {
   width: 80px;
   height: 60px;
@@ -1583,23 +1577,22 @@ footer {
 }
 .section-strip-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 68px;
+  font-size: 72px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--black);
   line-height: 1.05;
   display: inline-flex;
-  align-items: flex-start;    /* top-align // with title */
   margin: 0;
 }
 .section-strip-slash {
   color: var(--black);
-  font-weight: 700;
+  font-weight: 600;                                     /* match title weight */
   margin-right: 12px;
   opacity: 1;
   font-family: 'Space Grotesk', var(--font-mono), monospace;
-  font-size: 63px;
-  line-height: 1;
+  font-size: 60px;                                      /* matches title; baseline-align handles cap-height visual */
+  line-height: 1.05;                                    /* match title line-height */
 }
 .section-strip-link {
   display: inline-flex;
@@ -1636,7 +1629,6 @@ footer {
 }
 .fp-hd {
   display: flex;
-  align-items: baseline;
   margin-bottom: var(--space-8);
 }
 .fp-hd-title {
@@ -1744,9 +1736,15 @@ footer {
   margin: 0 auto;
   padding: var(--space-12) var(--grid-margin) var(--space-8);
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: auto;
-  gap: var(--space-12) var(--space-12);
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: start;          /* columns sit at top, independent heights */
+}
+.ex-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);        /* same gap between stacked panels as between columns */
+  min-width: 0;
 }
 .ex-link-wrap {
   display: flex;
@@ -1948,15 +1946,11 @@ footer {
 .ex-rows { align-items: stretch; }
 
 
-/* Make panel headers grab-cursor to indicate draggability */
+/* Panel headers (drag disabled — was previously grab cursor) */
 .ex-panel-hd {
-  cursor: grab;
   user-select: none;
 }
-.ex-panel-hd:active { cursor: grabbing; }
-/* When a panel enters dragging-mode, the inner-grid still allows positioning */
 .examples-bg-inner { position: relative; }
-.ex-link-wrap.is-dragging-mode { grid-area: unset; }
 
 
 /* ── Flat offset shadow blocks behind each panel ── */
@@ -1976,7 +1970,8 @@ footer {
 /* Per-panel shadow colors */
 .ex-draggable[data-pos="1"] .ex-panel::before { background: #FA744E; }  /* Prompt Library — coral */
 .ex-draggable[data-pos="2"] .ex-panel::before { background: #36B9FF; }  /* Apps — sky blue */
-.ex-draggable[data-pos="3"] .ex-panel::before { background: #00BFB3; }  /* Notebook — teal */
+.ex-draggable[data-pos="3"] .ex-panel::before { background: #FFC83D; }  /* Notebook — yellow */
+.ex-draggable[data-pos="4"] .ex-panel::before { background: #00BFB3; }  /* Glossary — teal */
 
 
 
@@ -2718,9 +2713,108 @@ a.kb-card:hover { text-decoration: none; }
   text-decoration: none;
 }
 .ex-row-learn-more:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* Precise hover — only the element under the cursor gets underlined */
+.fig-card-clean .fig-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.fig-card-clean .fig-author-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+
+/* Precise hover on hero list — title and author underline independently */
+.hero-list-item .hero-list-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.hero-list-item .fig-author-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* ── Hero FEATURED label + light teal underline (spans both columns) ── */
+.hero-featured-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: var(--space-4, 16px);
+  margin-bottom: var(--space-6, 24px);
+  border-bottom: 1px dashed #2f2f2f;
+}
+.hero-featured-icon {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.hero-featured-label {
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--black, #111010);
+}
+
+/* ── Glossary panel — paragraph link + pixel-arrow CTA ── */
+.ex-glossary-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--black, #111010);
+  margin: 0 0 var(--space-6, 24px) 0;
+}
+.ex-glossary-desc a {
+  color: var(--black, #111010);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s;
+}
+.ex-glossary-desc a:hover {
+  border-bottom-color: var(--black, #111010);
+}
+.ex-glossary-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--black, #111010);
+  color: var(--white, #FFF);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.ex-glossary-cta:hover { background: var(--color-elastic-blue, #0B64DD); }
+.ex-glossary-cta svg { width: 18px; height: 18px; }
+
+/* Suppress integration card transitions until page has finished loading
+   so cards don't visibly animate on initial render */
+body.preload .int-card,
+body.preload .int-card *,
+body.preload .int-card::before,
+body.preload .int-card::after {
+  transition: none !important;
+  animation: none !important;
+}
+
 </style>
 </head>
-<body>
+<body class="preload">
+<script>
+  // Remove preload class once page is fully loaded so transitions activate
+  window.addEventListener('load', function() {
+    requestAnimationFrame(function() {
+      document.body.classList.remove('preload');
+    });
+  });
+</script>
 
 <!-- ============== PRIMARY NAV (Figma 2311:16127) ============== -->
 <header class="primary-nav" aria-label="Primary navigation">
@@ -2818,6 +2912,24 @@ a.kb-card:hover { text-decoration: none; }
 
 <!-- HERO FEATURED LAYOUT -->
 <div class="hero-section-wrap">
+
+  <!-- "★ FEATURED" label + teal underline spanning both columns -->
+  <div class="hero-featured-header">
+    <span class="hero-featured-icon" aria-hidden="true">
+      <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="0" width="2" height="2" fill="#00BFB3"/>
+        <rect x="6" y="4" width="2" height="2" fill="#00BFB3"/>
+        <rect x="0" y="6" width="2" height="2" fill="#00BFB3"/>
+        <rect x="4" y="6" width="2" height="2" fill="#00BFB3"/>
+        <rect x="8" y="6" width="2" height="2" fill="#00BFB3"/>
+        <rect x="12" y="6" width="2" height="2" fill="#00BFB3"/>
+        <rect x="6" y="8" width="2" height="2" fill="#00BFB3"/>
+        <rect x="6" y="12" width="2" height="2" fill="#00BFB3"/>
+      </svg>
+    </span>
+    <span class="hero-featured-label">Featured</span>
+  </div>
+
   <div class="hero-layout">
 
   <!-- LEFT: Featured article — existing fig-card format -->
@@ -3042,73 +3154,8 @@ a.kb-card:hover { text-decoration: none; }
     <!-- Static UI annotation callouts -->
 
     <!-- Panel 1: Prompt Library -->
-    <div class="ex-link-wrap ex-draggable" data-pos="1" style="grid-column: 7 / span 6; grid-row: 1 / span 2;">
-      <div class="ex-panel">
-        <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
-        <div class="ex-panel-body">
-          <h3 class="ex-panel-title">Prompt Library</h3>
-          <div class="ex-rows">
-                        <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p0">
-        <span class="ex-row-title">Analyzing a Security Case</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p1">
-        <span class="ex-row-title">Asset Inventory Diagrams</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p2">
-        <span class="ex-row-title">CISO Incident Summary</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p3">
-        <span class="ex-row-title">Custom Elastic Crawl4AI connector</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p4">
-        <span class="ex-row-title">Expand Evaluation Dataset From Seed Indices</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <div class="ex-rows-more" data-collapsed="true">
-                        <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p5">
-        <span class="ex-row-title">Generate Seed Indices for Evaluation Data</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p6">
-        <span class="ex-row-title">Generate Test Cases for Evaluation</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p7">
-        <span class="ex-row-title">Meeting Summary Assistant</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p8">
-        <span class="ex-row-title">Negotiation Assistant</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p9">
-        <span class="ex-row-title">Security Policy Generator</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p10">
-        <span class="ex-row-title">Technical Discovery Assistant</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p11">
-        <span class="ex-row-title">Translate Alert Context into Language</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            </div>
-            <button class="ex-viewall-btn" onclick="toggleViewAll(this)">
-              <span class="ex-viewall-text">View all</span>
-              <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="ex-viewall-chev"><polygon points="2,4 10,4 6,9" fill="currentColor"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Panel 2: Apps -->
-    <div class="ex-link-wrap ex-draggable" data-pos="2" style="grid-column: 1 / span 6; grid-row: 1;">
+        <div class="ex-col ex-col-left">
+<div class="ex-link-wrap ex-draggable" data-pos="2">
       <div class="ex-panel">
         <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
         <div class="ex-panel-body">
@@ -3167,9 +3214,7 @@ a.kb-card:hover { text-decoration: none; }
         </div>
       </div>
     </div>
-
-    <!-- Panel 3: Notebook -->
-    <div class="ex-link-wrap ex-draggable" data-pos="3" style="grid-column: 1 / span 6; grid-row: 2;">
+<div class="ex-link-wrap ex-draggable" data-pos="3">
       <div class="ex-panel">
         <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
         <div class="ex-panel-body">
@@ -3354,7 +3399,90 @@ a.kb-card:hover { text-decoration: none; }
           </div><!-- /ex-rows -->
         </div><!-- /ex-panel-body -->
       </div><!-- /ex-panel -->
-    </div><!-- /ex-draggable notebook -->
+    </div>
+    </div><!-- /ex-col-left -->
+
+    <div class="ex-col ex-col-right">
+<div class="ex-link-wrap ex-draggable" data-pos="1">
+      <div class="ex-panel">
+        <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
+        <div class="ex-panel-body">
+          <h3 class="ex-panel-title">Prompt Library</h3>
+          <div class="ex-rows">
+                        <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p0">
+        <span class="ex-row-title">Analyzing a Security Case</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p1">
+        <span class="ex-row-title">Asset Inventory Diagrams</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p2">
+        <span class="ex-row-title">CISO Incident Summary</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p3">
+        <span class="ex-row-title">Custom Elastic Crawl4AI connector</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p4">
+        <span class="ex-row-title">Expand Evaluation Dataset From Seed Indices</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <div class="ex-rows-more" data-collapsed="true">
+                        <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p5">
+        <span class="ex-row-title">Generate Seed Indices for Evaluation Data</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p6">
+        <span class="ex-row-title">Generate Test Cases for Evaluation</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p7">
+        <span class="ex-row-title">Meeting Summary Assistant</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p8">
+        <span class="ex-row-title">Negotiation Assistant</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p9">
+        <span class="ex-row-title">Security Policy Generator</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p10">
+        <span class="ex-row-title">Technical Discovery Assistant</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p11">
+        <span class="ex-row-title">Translate Alert Context into Language</span>
+        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
+      </a>
+            </div>
+            <button class="ex-viewall-btn" onclick="toggleViewAll(this)">
+              <span class="ex-viewall-text">View all</span>
+              <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="ex-viewall-chev"><polygon points="2,4 10,4 6,9" fill="currentColor"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="ex-link-wrap ex-draggable" data-pos="4">
+      <div class="ex-panel">
+        <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
+        <div class="ex-panel-body">
+          <h3 class="ex-panel-title">Glossary</h3>
+          <p class="ex-glossary-desc">
+            <a href="sunny-elastic-results.html">Definitions and reference material for every term, concept, and acronym used across the Elasticsearch Labs library.</a>
+          </p>
+          <a href="sunny-elastic-results.html" class="ex-glossary-cta" aria-label="Open glossary">
+            <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    </div><!-- /ex-col-right -->
+<!-- /ex-draggable glossary -->
 
   </div><!-- /examples-bg-inner -->
 </div><!-- /examples-bg-section -->
@@ -3704,109 +3832,10 @@ function toggleViewAll(btn) {
   }
 }
 
-// Drag-and-drop for Examples panels
-(function() {
-  let dragging = null;
-  let offsetX = 0, offsetY = 0;
-  let startLeft = 0, startTop = 0;
-  let containerHeightLocked = false;
-
-  function lockContainerHeight() {
-    if (containerHeightLocked) return;
-    const inner = document.querySelector('.examples-bg-inner');
-    const section = document.querySelector('.examples-bg-section');
-    if (!inner) return;
-    // Measure current laid-out height before anything goes absolute
-    const h = inner.getBoundingClientRect().height;
-    inner.style.minHeight = h + 'px';
-    if (section) section.style.minHeight = (h + 40) + 'px';
-    containerHeightLocked = true;
-  }
-
-  function onPointerDown(e) {
-    const hd = e.target.closest('.ex-panel-hd');
-    if (!hd) return;
-    const wrap = hd.closest('.ex-draggable');
-    if (!wrap) return;
-    if (e.target.classList.contains('ex-panel-square')) return;
-
-    e.preventDefault();
-    dragging = wrap;
-    const rect = wrap.getBoundingClientRect();
-
-    // STEP 1: Lock container height BEFORE first absolute conversion
-    lockContainerHeight();
-
-    const parentRect = wrap.parentElement.getBoundingClientRect();
-
-    if (!wrap.classList.contains('is-dragging-mode')) {
-      // STEP 2: Convert all panels to absolute simultaneously the first time
-      // This avoids the grid reflowing one item at a time
-      const allPanels = wrap.parentElement.querySelectorAll('.ex-draggable');
-      allPanels.forEach(p => {
-        if (!p.classList.contains('is-dragging-mode')) {
-          const r = p.getBoundingClientRect();
-          p.style.position = 'absolute';
-          p.style.left = (r.left - parentRect.left) + 'px';
-          p.style.top  = (r.top - parentRect.top) + 'px';
-          p.style.width = r.width + 'px';
-          p.style.gridColumn = '';
-          p.style.gridRow = '';
-          p.classList.add('is-dragging-mode');
-        }
-      });
-    }
-    wrap.style.zIndex = '10';
-    // Reset other panels z-index
-    wrap.parentElement.querySelectorAll('.ex-draggable').forEach(p => {
-      if (p !== wrap) p.style.zIndex = '5';
-    });
-
-    startLeft = parseInt(wrap.style.left, 10);
-    startTop  = parseInt(wrap.style.top, 10);
-    offsetX = e.clientX;
-    offsetY = e.clientY;
-    wrap.style.cursor = 'grabbing';
-    document.body.style.userSelect = 'none';
-  }
-
-  function onPointerMove(e) {
-    if (!dragging) return;
-    const dx = e.clientX - offsetX;
-    const dy = e.clientY - offsetY;
-    let newLeft = startLeft + dx;
-    let newTop = startTop + dy;
-
-    // Constrain to parent (.examples-bg-inner) bounds
-    const parent = dragging.parentElement;
-    const parentRect = parent.getBoundingClientRect();
-    const wrapRect = dragging.getBoundingClientRect();
-    const wrapWidth = wrapRect.width;
-    const wrapHeight = wrapRect.height;
-    const maxLeft = parent.clientWidth - wrapWidth;
-    const maxTop = parent.clientHeight - wrapHeight;
-
-    if (newLeft < 0) newLeft = 0;
-    if (newTop < 0) newTop = 0;
-    if (newLeft > maxLeft) newLeft = maxLeft;
-    if (newTop > maxTop) newTop = maxTop;
-
-    dragging.style.left = newLeft + 'px';
-    dragging.style.top  = newTop + 'px';
-  }
-
-  function onPointerUp() {
-    if (dragging) {
-      dragging.style.cursor = '';
-      dragging = null;
-      document.body.style.userSelect = '';
-    }
-  }
-
-  document.addEventListener('mousedown', onPointerDown);
-  document.addEventListener('mousemove', onPointerMove);
-  document.addEventListener('mouseup', onPointerUp);
-})();
+// Drag-and-drop for Examples panels — DISABLED
+// (Drag handlers removed; expand/collapse rows + colored offset backgrounds still work.)
+// To re-enable, restore the IIFE that listened on mousedown/mousemove/mouseup
+// for .ex-panel-hd and toggled the .is-dragging-mode class.
 </script>
 <script>
 
@@ -3819,6 +3848,32 @@ document.addEventListener('click', function(e) {
     window.location.href = 'sunny-elastic-author.html';
   }
 });
+</script>
+<script>
+/* ── Anchor scroll fix: re-scroll to hash after page fully loads ── */
+/* When arriving from another page with a hash (e.g. #tutorial), the browser jumps
+   before images/fonts settle, leaving the scroll position stale. This re-aligns. */
+(function() {
+  if (!window.location.hash) return;
+
+  function scrollToHash() {
+    var id = window.location.hash.slice(1);
+    if (!id) return;
+    var target = document.getElementById(id);
+    if (!target) return;
+    // Cancel browser's initial (stale) scroll, then smooth-scroll to the correct position
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Run after window 'load' (everything: images, fonts, layout settled)
+  if (document.readyState === 'complete') {
+    setTimeout(scrollToHash, 50);
+  } else {
+    window.addEventListener('load', function() {
+      setTimeout(scrollToHash, 50);
+    });
+  }
+})();
 </script>
 </body>
 </html>
