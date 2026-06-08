@@ -675,7 +675,6 @@ footer {
 }
 .kb-panel-hd {
   display: flex;
-  align-items: baseline;
   gap: var(--space-6);
   margin-bottom: var(--space-8);
 }
@@ -1024,8 +1023,6 @@ footer {
   color: inherit;
   transition: opacity 0.18s;
 }
-.fig-card:hover .fig-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
 /* Top label row */
 .fig-label-row {
   display: flex;
@@ -1195,8 +1192,6 @@ footer {
   color: inherit;
   transition: opacity 0.18s;
 }
-.fig-card-clean:hover .fig-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-
 /* ── FEATURED label row (dashes only, no squares) ── */
 .fig-featured-row {
   display: flex;
@@ -1331,7 +1326,6 @@ footer {
   transition: opacity 0.15s;
 }
 
-.hero-list-item:hover .hero-list-title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 .hero-list-thumb {
   width: 80px;
   height: 60px;
@@ -1588,23 +1582,22 @@ footer {
 }
 .section-strip-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 68px;
+  font-size: 72px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--black);
   line-height: 1.05;
   display: inline-flex;
-  align-items: flex-start;    /* top-align // with title */
   margin: 0;
 }
 .section-strip-slash {
   color: var(--black);
-  font-weight: 700;
+  font-weight: 600;                                     /* match title weight */
   margin-right: 12px;
   opacity: 1;
   font-family: 'Space Grotesk', var(--font-mono), monospace;
-  font-size: 63px;
-  line-height: 1;
+  font-size: 60px;                                      /* matches title; baseline-align handles cap-height visual */
+  line-height: 1.05;                                    /* match title line-height */
 }
 .section-strip-link {
   display: inline-flex;
@@ -1641,7 +1634,6 @@ footer {
 }
 .fp-hd {
   display: flex;
-  align-items: baseline;
   margin-bottom: var(--space-8);
 }
 .fp-hd-title {
@@ -2883,6 +2875,98 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 .blog-filter-row { grid-column: 1; grid-row: 2; }
 /* Row 2, col 2 — Sort button */
 .blog-filter-area .blog-sort { grid-column: 2; grid-row: 2; margin-left: 0; justify-self: end; }
+
+/* Precise hover — only the element under the cursor gets underlined */
+.fig-card-clean .fig-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.fig-card-clean .fig-author-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+
+/* Precise hover on hero list — title and author underline independently */
+.hero-list-item .hero-list-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.hero-list-item .fig-author-name:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* ── Series pane — 2x2 grid of series cards ── */
+.blog-series-wrap {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--grid-margin) var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8) var(--space-8);
+}
+.blog-series-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  background: var(--white);
+  border: 1px solid var(--black);
+  text-decoration: none;
+  color: var(--black);
+  transition: background 0.15s, transform 0.15s;
+}
+.blog-series-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--black);
+}
+.blog-series-card:hover .blog-series-title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2.5px;
+}
+.blog-series-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #595959;
+}
+.blog-series-count { color: #00BFB3; font-weight: 700; }
+.blog-series-dash {
+  flex: 1;
+  border-top: 1px dashed #2f2f2f;
+  height: 0;
+}
+.blog-series-label { color: var(--black); font-weight: 500; }
+.blog-series-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--black);
+  margin: 0;
+}
+.blog-series-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #2f2f2f;
+  margin: 0;
+}
+@media (max-width: 768px) {
+  .blog-series-wrap { grid-template-columns: 1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -2981,6 +3065,16 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 
 
 
+<!-- BLOG / SERIES TABS -->
+<div class="blog-section-tabs">
+  <a href="#" class="blog-section-tab is-active" data-target="blog" onclick="switchBlogPane(event, 'blog')">Blog</a>
+  <a href="#" class="blog-section-tab" data-target="series" onclick="switchBlogPane(event, 'series')">Series</a>
+</div>
+
+
+<!-- BLOG PANE -->
+<div class="tab-pane" data-pane="blog">
+
 <!-- BLOG FILTER DROPDOWNS -->
 <div class="blog-filter-area">
   <span class="blog-filter-by-label">Filter by</span>
@@ -3000,6 +3094,7 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Observability Labs&#39;)">Observability Labs</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Security Labs&#39;)">Security Labs</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;News&#39;)">News</a>
+      <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;All blogs&#39;)">All blogs</a>
     </div>
   </div>
     <div class="blog-filter" data-filter="categories" data-default-label="Categories">
@@ -3305,6 +3400,255 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 
   </div>
 </div>
+
+</div><!-- /tab-pane blog -->
+
+<!-- SERIES PANE -->
+<div class="tab-pane" data-pane="series" hidden>
+  <div class="blog-series-wrap">
+
+    <a href="sunny-elastic-results.html?series=advanced-rag-techniques" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">8 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Advanced RAG techniques</h3>
+      <p class="blog-series-desc">In this series, we&#x27;ll discuss and implement techniques that may increase RAG performance.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=context-aware-ai-agentic-workflows-with-elastic" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">5 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Context-Aware AI Agentic workflows with Elastic</h3>
+      <p class="blog-series-desc">Learn about building context-aware AI agents with Elastic&#x27;s new Agent Builder platform and search capabilities.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=creating-an-llm-agent-newsroom-with-a2a-protocol-and-mcp-in-elasticsearch" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">4 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Creating an LLM Agent newsroom with A2A protocol and MCP in Elasticsearch</h3>
+      <p class="blog-series-desc">Explore the concepts of A2A protocol and MCP and build an LLM agent newsroom from scratch in Elasticsearch.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=deploying-and-querying-an-e5-multilingual-embedding-model-in-elasticsearch" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">3 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Deploying and querying an e5 multilingual embedding model in Elasticsearch</h3>
+      <p class="blog-series-desc">Learn how to query and retrieve information in any language from both single and multilingual datasets using an e5 multilingual model in Elasticsearch.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=elasticsearch-geospatial-search" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">6 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Elasticsearch geospatial search</h3>
+      <p class="blog-series-desc">This series covers how to use the new geospatial search features in ES|QL, including how to ingest geospatial data and how to use it in ES|QL queries.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=elasticsearch-in-javascript-the-proper-way" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">7 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Elasticsearch in JavaScript the proper way</h3>
+      <p class="blog-series-desc">Learn how to create a production-ready Elasticsearch backend in JavaScript, follow best practices, and run the Elasticsearch Node.js client in Serverless environments.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=entity-resolution-with-elasticsearch" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">4 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Entity resolution with Elasticsearch</h3>
+      <p class="blog-series-desc">Exploring a transparent, retrieval-first approach to entity resolution using Elasticsearch and large language models (LLMs).</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=evaluating-search-relevance" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">9 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Evaluating search relevance</h3>
+      <p class="blog-series-desc">Blog posts discussing how to think about evaluating your own search systems in the context of better understanding the BEIR benchmark. We will introduce specific tips and techniques to improve your search evaluation processes.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=fast-approximate-es-ql" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">3 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Fast Approximate ES|QL</h3>
+      <p class="blog-series-desc">Introducing the work we&#x27;ve done on a fast approximate querying mode for ES|QL.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=genai-for-customer-support" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">11 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">GenAI for customer support</h3>
+      <p class="blog-series-desc">This series gives you an inside look at how we&#x27;re using generative AI in customer support. Join us as we share our journey in real-time!</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=getting-started-with-elasticsearch" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">5 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Getting started with Elasticsearch</h3>
+      <p class="blog-series-desc">Explore different ways to easily set up and run Elasticsearch.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=governed-search-patterns" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">6 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Governed search patterns</h3>
+      <p class="blog-series-desc">This series describes governed search patterns designed and built by Elastic Services Engineering, deployed for enterprise ecommerce teams through Elastic Professional Services.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=how-to-ingest-data-from-aws-s3-into-elastic-cloud" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">4 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">How to ingest data from AWS S3 into Elastic Cloud</h3>
+      <p class="blog-series-desc">Learn about different ways you can ingest data from AWS S3 into Elastic Cloud.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=improving-information-retrieval-in-the-elastic-stack" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">10 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Improving information retrieval in the Elastic Stack</h3>
+      <p class="blog-series-desc">This series explores steps to improve search relevance, benchmarking passage retrieval, ELSER, and hybrid retrieval.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=indexing-onelake-data-into-elasticsearch" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">3 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Indexing OneLake data into Elasticsearch</h3>
+      <p class="blog-series-desc">Learn how to connect to OneLake and index documents into Elasticsearch. Then, take the configuration one step further by developing your own OneLake connector.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=integration-tests-using-elasticsearch" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">4 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Integration tests using Elasticsearch</h3>
+      <p class="blog-series-desc">This series demonstrates improvements for integration tests using Elasticsearch and advanced techniques to further reduce execution time in Elasticsearch integration tests.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=introducing-langchain4j-building-rag-apps-in-plain-java" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">5 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Introducing LangChain4j: Building RAG apps in plain Java</h3>
+      <p class="blog-series-desc">Introducing LangChain4j (LangChain for Java). Discover how to use it to build your RAG application in plain Java.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=jira-connector-tutorials" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">3 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Jira connector tutorials</h3>
+      <p class="blog-series-desc">Learn how to integrate Elasticsearch with Jira using Elastic&#x27;s Jira native connector and explore optimization techniques.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=semantic-reranking-the-elastic-rerank-model" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">6 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Semantic reranking &amp; the Elastic Rerank model</h3>
+      <p class="blog-series-desc">Introducing the concept of semantic reranking and Elastic Rerank, Elastic&#x27;s new semantic re-ranker model.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=the-colpali-model-series" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">7 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">The ColPali model series</h3>
+      <p class="blog-series-desc">Introducing the ColPali model, its implementation in Elasticsearch, and how to scale late interaction models for large-scale vector search.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=the-spotify-wrapped-series" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">4 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">The Spotify Wrapped series</h3>
+      <p class="blog-series-desc">Here&#x27;s how to create your own Spotify Wrapped in Kibana and dive deep into your data.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=ubi-plugin" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">3 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">UBI Plugin</h3>
+      <p class="blog-series-desc">Learn how to use the UBI plugin to analyze search queries in Elasticsearch.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=using-the-elasticsearch-go-client-for-keyword-search-vector-search-hybrid-search" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">5 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Using the Elasticsearch Go client for keyword search, vector search &amp; hybrid search</h3>
+      <p class="blog-series-desc">This series explains how to use the Elasticsearch Go client for traditional keyword search, vector search and hybrid search.</p>
+    </a>
+
+    <a href="sunny-elastic-results.html?series=vector-search-introduction-and-implementation" class="blog-series-card">
+      <div class="blog-series-meta">
+        <span class="blog-series-count">8 PARTS</span>
+        <span class="blog-series-dash"></span>
+        <span class="blog-series-label">Series</span>
+      </div>
+      <h3 class="blog-series-title">Vector search introduction and implementation</h3>
+      <p class="blog-series-desc">This series dives into the intricacies of vector search, how it is implemented in Elasticsearch, and how to run hybrid search queries in Elasticsearch.</p>
+    </a>
+
+  </div>
+</div><!-- /tab-pane series -->
 
 
 <footer>
