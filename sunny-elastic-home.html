@@ -730,7 +730,6 @@ footer {
   align-self: center;
 }
 .kb-card:hover .kb-icon { color: var(--black); }
-.kb-card:hover { background: #ECEEF1; }
 .kb-fold {
   position: absolute;
   top: -1px; right: -1px;
@@ -1801,12 +1800,23 @@ footer {
   color: var(--black);
   transition: background 0.15s;
 }
-.ex-row-trigger:hover { background: #D8DADE; }
+.ex-row-trigger:hover { background: #E8E9EC; }   /* keep the same — no whole-row hover change */
+
+/* Title underline ONLY when hovering directly over the title text */
+.ex-row-trigger .ex-row-title:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  cursor: pointer;
+}
+
 .ex-row-title {
   font-family: var(--font-body);
   font-size: 14px;
   color: var(--black);
   font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
 }
 .ex-row-tags {
   display: flex;
@@ -1839,8 +1849,9 @@ footer {
   justify-content: center;
   color: var(--black);
   flex-shrink: 0;
-  transition: transform 0.2s;
+  transition: transform 0.2s, color 0.15s;
 }
+.ex-row-trigger .ex-row-toggle:hover { color: #595959; }
 .ex-row-toggle svg { width: 14px; height: 14px; }
 .ex-row.is-open .ex-row-toggle { transform: rotate(45deg); }
 .ex-row-body {
@@ -2773,37 +2784,31 @@ a.kb-card:hover { text-decoration: none; }
   color: var(--black, #111010);
 }
 
-/* ── Glossary panel — paragraph link + pixel-arrow CTA ── */
+/* ── Glossary panel — paragraph text + pixel-arrow CTA (transparent, like Prompt Library) ── */
 .ex-glossary-desc {
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.5;
-  color: var(--black, #111010);
+  color: #2f2f2f;
+  font-weight: 400;
   margin: 0 0 var(--space-6, 24px) 0;
-  font-weight: 600;
-}
-.ex-glossary-desc a {
-  color: var(--black, #111010);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.15s;
-}
-.ex-glossary-desc a:hover {
-  border-bottom-color: var(--black, #111010);
 }
 .ex-glossary-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: var(--black, #111010);
-  color: var(--white, #FFF);
+  width: 22px;
+  height: 22px;
+  color: var(--black, #111010);
   text-decoration: none;
-  transition: background 0.15s;
+  transition: transform 0.18s;
 }
-.ex-glossary-cta:hover { background: var(--color-elastic-blue, #0B64DD); }
-.ex-glossary-cta svg { width: 18px; height: 18px; }
+.ex-glossary-cta:hover { transform: translateX(3px); }
+.ex-glossary-cta svg {
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+}
 
 /* Suppress integration card transitions until page has finished loading
    so cards don't visibly animate on initial render */
@@ -2815,6 +2820,129 @@ body.preload .int-card::after {
   animation: none !important;
 }
 
+
+/* ── Tutorial card hover: title underlines, ICON blinks then settles teal ── */
+@keyframes icon-blink-teal {
+  0% { color: var(--black, #111010); opacity: 1; }
+  20% { color: #00BFB3; opacity: 0.2; }
+  40% { color: #00BFB3; opacity: 1; }
+  60% { color: var(--black, #111010); opacity: 0.2; }
+  80% { color: #00BFB3; opacity: 1; }
+  100% { color: #00BFB3; opacity: 1; }
+}
+.kb-card .kb-title { transition: text-decoration 0.1s; }
+.kb-card .kb-icon { transition: color 0.15s; }
+.kb-card:hover .kb-title,
+.kb-card:focus-visible .kb-title,
+.kb-card:active .kb-title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.kb-card:hover .kb-icon,
+.kb-card:focus-visible .kb-icon,
+.kb-card:active .kb-icon {
+  animation: icon-blink-teal 0.5s steps(1, end) forwards;
+  color: #00BFB3;
+}
+
+.section-strip-desc a {
+  color: var(--color-elastic-blue, #0B64DD);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.section-strip-desc a:hover {
+  text-decoration-thickness: 1.5px;
+}
+
+/* ── Tutorial section — callout positioned absolutely as a free module ── */
+.section-strip--tutorial {
+  position: relative;            /* anchor for absolute-positioned callout inside */
+}
+
+/* "New to Elastic?" callout — self-positioned module
+   ★ ADJUST POSITION via the two variables below:
+      --callout-top:  distance from the top of the .section-strip--tutorial container
+      --callout-right: distance from the right edge of the .section-strip--tutorial container
+   No layout dependency — moving the callout will NOT shift the Tutorial title or paragraph. */
+.intro-callout {
+  --callout-top: 81px;
+  --callout-right: 340px;
+  --callout-width: 360px;
+
+  position: absolute;
+  top: var(--callout-top);
+  right: var(--callout-right);
+  width: var(--callout-width);
+  max-width: calc(100% - var(--callout-right) * 2);
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-4, 16px);
+  text-decoration: none;
+  color: var(--black, #111010);
+}
+.intro-callout__arrow {
+  width: 60px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-top: -21px;
+}
+.intro-callout__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+  min-width: 0;
+}
+.intro-callout__title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+}
+.intro-callout__icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--black, #111010);
+  transition: color 0.15s;
+}
+.intro-callout__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+  color: var(--black, #111010);
+  margin: 0;
+  transition: text-decoration 0.1s;
+}
+.intro-callout:hover .intro-callout__title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.intro-callout:hover .intro-callout__icon {
+  animation: icon-blink-teal 0.5s steps(1, end) forwards;
+  color: #00BFB3;
+}
+.intro-callout__body {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--black, #111010);
+  margin: 0;
+  word-break: break-word;
+}
+@media (max-width: 900px) {
+  /* On narrow screens, drop the callout into the normal flow so it doesn't overlap */
+  .intro-callout {
+    position: static;
+    width: 100%;
+    margin: var(--space-6, 24px) var(--grid-margin) 0;
+  }
+}
 
 </style>
 </head>
@@ -3080,11 +3208,47 @@ body.preload .int-card::after {
 </div><!-- /hero-section-wrap -->
 
 <!-- SECTION: Tutorial -->
-<div class="section-strip" id="tutorial">
+<div class="section-strip section-strip--tutorial" id="tutorial">
   <div class="section-strip-inner">
     <h2 class="section-strip-title"><span class="section-strip-slash">//</span>Tutorial</h2>
-    <p class="section-strip-desc">Long-form guides to get you started.</p>
+    <p class="section-strip-desc">Get started combining Elastic's search capabilities with cutting-edge machine-learning techniques, empowering you to create search solutions that deliver the precision and relevant results your users are looking for. Once you've mastered the basics, explore our <a href="sunny-elastic-home.html#examples">examples</a> and <a href="sunny-elastic-results.html">blog</a> to see learn how our experts suggest taking your search experience even further.</p>
   </div>
+
+  <!-- "New to Elastic?" callout — self-positioned module (Figma node 2491:2510) -->
+  <!-- ★ Adjust position via the CSS variables --callout-top and --callout-right below ★ -->
+  <a class="intro-callout" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/elasticsearch-intro.html" target="_blank" rel="noopener">
+    <svg class="intro-callout__arrow" viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Diagonal curve bowing UP, going from lower-right to upper-left -->
+      <path d="M 56 20 C 40 6, 18 6, 4 4" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <!-- Arrowhead at upper-left tip, pointing up-and-left -->
+      <path d="M 4 4 L 10 8 M 4 4 L 11 2" stroke="black" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div class="intro-callout__content">
+      <div class="intro-callout__title-row">
+        <span class="intro-callout__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+            <!-- Pixel waving hand — 3 fingers + thumb + palm + wrist -->
+            <!-- Fingers -->
+            <rect x="3" y="0" width="3" height="6" fill="currentColor"/>
+            <rect x="9" y="0" width="3" height="6" fill="currentColor"/>
+            <rect x="15" y="0" width="3" height="6" fill="currentColor"/>
+            <!-- Knuckles connect fingers -->
+            <rect x="0" y="6" width="21" height="3" fill="currentColor"/>
+            <!-- Palm + thumb extends right -->
+            <rect x="0" y="9" width="24" height="3" fill="currentColor"/>
+            <rect x="0" y="12" width="21" height="3" fill="currentColor"/>
+            <!-- Palm narrows -->
+            <rect x="3" y="15" width="18" height="3" fill="currentColor"/>
+            <!-- Wrist -->
+            <rect x="3" y="18" width="15" height="3" fill="currentColor"/>
+            <rect x="6" y="21" width="9" height="3" fill="currentColor"/>
+          </svg>
+        </span>
+        <h3 class="intro-callout__title">New to Elastic?</h3>
+      </div>
+      <p class="intro-callout__body">Start with the Elasticsearch docs to learn the fundamentals. When you're ready, come back to Elasticsearch Labs for more advanced content using our latest innovations.</p>
+    </div>
+  </a>
 </div>
 
 <!-- KB CARDS -->
@@ -3203,7 +3367,7 @@ body.preload .int-card::after {
       
       <div class="ex-row" data-row="a0">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Chatbot RAG Reference App</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-apps.html" onclick="event.stopPropagation()">Chatbot RAG Reference App</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span></div>
           <span class="ex-row-toggle">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg>
@@ -3219,7 +3383,7 @@ body.preload .int-card::after {
         </div>
       </div>      <div class="ex-row" data-row="a1">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">OpenAI embeddings in Elasticsearch</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-apps.html" onclick="event.stopPropagation()">OpenAI embeddings in Elasticsearch</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span></div>
           <span class="ex-row-toggle">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg>
@@ -3235,7 +3399,7 @@ body.preload .int-card::after {
         </div>
       </div>      <div class="ex-row" data-row="a2">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Relevance Workbench</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-apps.html" onclick="event.stopPropagation()">Relevance Workbench</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span><span class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation();">+1</span></div>
           <span class="ex-row-toggle">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg>
@@ -3262,7 +3426,7 @@ body.preload .int-card::after {
           <div class="ex-rows">
       <div class="ex-row" data-row="n0">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Semantic search using the Inference API with the OpenAI service</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Semantic search using the Inference API with the OpenAI service</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3278,7 +3442,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n1">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Load an Embedding Model into Elasticsearch</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Load an Embedding Model into Elasticsearch</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Lucene')">Lucene</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3294,7 +3458,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n2">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Load and search with a multilingual model</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Load and search with a multilingual model</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3310,7 +3474,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n3">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Semantic search with ELSER in Elasticsearch</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Semantic search with ELSER in Elasticsearch</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Relevance')">Relevance</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3326,7 +3490,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n4">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Question Answering with LangChain and OpenAI</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Question Answering with LangChain and OpenAI</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3342,7 +3506,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n5">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Integrate LangChain Bedrock LLM and Elasticsearch</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Integrate LangChain Bedrock LLM and Elasticsearch</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3358,7 +3522,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n6">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Semantic search using the Inference API with the Cohere service</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Semantic search using the Inference API with the Cohere service</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3374,7 +3538,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n7">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Using Cohere for RAG and Rerank in Elasticsearch</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Using Cohere for RAG and Rerank in Elasticsearch</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3390,7 +3554,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n8">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">RAG chatbot with LangChain and Elasticsearch</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">RAG chatbot with LangChain and Elasticsearch</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3406,7 +3570,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n9">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Integrations LangChain question answering with self query retriever</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Integrations LangChain question answering with self query retriever</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3422,7 +3586,7 @@ body.preload .int-card::after {
       </div>
       <div class="ex-row" data-row="n10">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
-          <span class="ex-row-title">Semantic search quick start</span>
+          <a class="ex-row-title" href="sunny-elastic-examples-notebook.html" onclick="event.stopPropagation()">Semantic search quick start</a>
           <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span></div>
           <span class="ex-row-toggle"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg></span>
         </button>
@@ -3512,11 +3676,9 @@ body.preload .int-card::after {
         <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
         <div class="ex-panel-body">
           <h3 class="ex-panel-title">Glossary</h3>
-          <p class="ex-glossary-desc">
-            <a href="sunny-elastic-results.html">Definitions and reference material for every term, concept, and acronym used across the Elasticsearch Labs library.</a>
-          </p>
+          <p class="ex-glossary-desc">Definitions and reference material for every term, concept, and acronym used across the Elasticsearch Labs library.</p>
           <a href="sunny-elastic-results.html" class="ex-glossary-cta" aria-label="Open glossary">
-            <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg>
+            <svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg>
           </a>
         </div>
       </div>
@@ -3536,17 +3698,17 @@ body.preload .int-card::after {
 </div>
 
 <div class="int-tabs-wrap">
-  <a href="#" class="int-tab is-active">All Integrations</a>
-  <a href="#" class="int-tab">Model Providers</a>
-  <a href="#" class="int-tab">RAG Development Frameworks</a>
-  <a href="#" class="int-tab">ETL and Data Prep</a>
+  <a href="#" class="int-tab is-active" data-filter="all" onclick="filterIntegrations(event, 'all')">All Integrations</a>
+  <a href="#" class="int-tab" data-filter="model-providers" onclick="filterIntegrations(event, 'model-providers')">Model Providers</a>
+  <a href="#" class="int-tab" data-filter="rag-frameworks" onclick="filterIntegrations(event, 'rag-frameworks')">RAG Development Frameworks</a>
+  <a href="#" class="int-tab" data-filter="etl-data-prep" onclick="filterIntegrations(event, 'etl-data-prep')">ETL and Data Prep</a>
 </div>
 
 <!-- INTEGRATION GRID -->
 <div class="recent-section">
   <div class="int-grid-wrap">
     <div class="int-grid">
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">01</span>
@@ -3560,7 +3722,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">02</span>
@@ -3574,7 +3736,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">03</span>
@@ -3588,7 +3750,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">04</span>
@@ -3602,7 +3764,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">05</span>
@@ -3616,7 +3778,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">06</span>
@@ -3630,7 +3792,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">07</span>
@@ -3644,7 +3806,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">08</span>
@@ -3658,7 +3820,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="rag-frameworks">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">09</span>
@@ -3672,7 +3834,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="rag-frameworks">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">10</span>
@@ -3686,7 +3848,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">11</span>
@@ -3700,7 +3862,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">12</span>
@@ -3714,7 +3876,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">13</span>
@@ -3728,7 +3890,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="model-providers">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">14</span>
@@ -3742,7 +3904,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="etl-data-prep">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">15</span>
@@ -3756,7 +3918,7 @@ body.preload .int-card::after {
         <span class="int-card-cta">View integration <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" class="int-arrow"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
       </div>
     </a>
-    <a href="sunny-elastic-integration.html" class="int-card">
+    <a href="sunny-elastic-integration.html" class="int-card" data-category="etl-data-prep">
       <div class="int-card-hd">
         <span class="int-card-square"></span>
         <span class="int-card-num">16</span>
@@ -3914,6 +4076,25 @@ document.addEventListener('click', function(e) {
     });
   }
 })();
+</script>
+
+<script>
+/* Integration grid filter — show/hide cards by category, no scroll jump */
+function filterIntegrations(event, category) {
+  event.preventDefault();
+  // Toggle active state on tabs
+  document.querySelectorAll('.int-tab').forEach(function(tab) {
+    tab.classList.toggle('is-active', tab.dataset.filter === category);
+  });
+  // Show/hide cards by data-category
+  document.querySelectorAll('.int-card').forEach(function(card) {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
 </script>
 </body>
 </html>
