@@ -366,6 +366,64 @@ a { text-decoration: none; color: inherit; }
   padding: 2px 6px;
   border: 1px solid var(--silver);
 }
+
+/* ── Multi-line code block (pre + code) ── */
+.article-page__content .code-block {
+  position: relative;
+  background: var(--cream, #F5F7FA);
+  border: 1px solid var(--black, #111010);
+  padding: var(--space-6, 24px) var(--space-8, 32px);
+  margin: var(--space-6, 24px) 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.article-page__content .code-block pre {
+  margin: 0;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--black, #111010);
+  white-space: pre;
+  background: transparent;
+  padding: 0;
+  padding-right: 40px;     /* leave room for the copy button */
+}
+.article-page__content .code-block pre code {
+  /* Override the inline-code chip styling for block context */
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+}
+.code-block__copy {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #595959;
+  border-radius: 2px;
+  transition: color 0.15s, background 0.15s;
+}
+.code-block__copy:hover { color: var(--black, #111010); background: #E8E9EC; }
+.code-block__copy svg { width: 16px; height: 16px; }
+.code-block__copy.is-copied { color: #00BFB3; }
+
+/* Syntax-highlight tokens — colors match the screenshot reference */
+.tok-method { color: #2f2f2f; font-weight: 600; }   /* GET / POST */
+.tok-key { color: #BD1B19; }                         /* "property": */
+.tok-str { color: #166534; }                         /* "string value" */
+.tok-tag { color: #166534; }                         /* <PLACEHOLDER> */
+.tok-num { color: #0067E5; }                         /* numbers */
+.tok-brace { color: #166534; }                       /* { } [ ] */
+.tok-punc { color: #595959; }                        /* , : */
 .article-page__content a {
   color: var(--black);
   text-decoration: underline;
@@ -899,6 +957,10 @@ footer {
 }
 /* ===== END SECONDARY NAV ===== */
 
+
+/* Author chips are now clickable links */
+a.author-chip { color: inherit; text-decoration: none; cursor: pointer; }
+a.author-chip:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 </style>
 </head>
 <body>
@@ -1014,8 +1076,8 @@ footer {
       <div class="meta-group">
         <span class="meta-label">Authors</span>
         <span class="meta-value">
-          <span class="author-chip"><span class="author-ico"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span>James Beswick</span>
-          <span class="author-chip"><span class="author-ico"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span>Peter Epsteen</span>
+          <a class="author-chip" href="sunny-elastic-author.html?author=James%20Beswick"><span class="author-ico"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span>James Beswick</a>
+          <a class="author-chip" href="sunny-elastic-author.html?author=Peter%20Epsteen"><span class="author-ico"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></span>Peter Epsteen</a>
         </span>
       </div>
       <div class="meta-group">
@@ -1098,6 +1160,45 @@ footer {
       <p>The results split very cleanly. Passive hints failed while active prompts and distribution plays worked, some of them far better than expected. Before we get into the why, it's worth pausing on how unintuitive that split is. Most of our priors said the opposite. We assumed the agents we'd be working with were broadly competent generalists. We assumed they'd read what we put in front of them. We assumed that a well-placed comment in source code would do real work.</p>
 
       <p>None of that was wrong, exactly, but it was the wrong frame. The agents we tested with, even the strongest ones, behaved less like attentive readers and more like rushed contractors who were trying to ship something today. They wanted clear instructions, not breadcrumbs. They wanted a path, not a sign post.</p>
+
+      <p>To make the stakes concrete: here is the kind of query an agent needs to construct correctly on a vector index. Get one parameter wrong (wrong field name, missing <code>method_parameters</code>, no <code>_source</code> exclusion) and the response is degraded, slow, or wrong.</p>
+
+      <div class="code-block">
+        <button class="code-block__copy" type="button" onclick="copyCodeBlock(this)" aria-label="Copy code">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4.5" y="4.5" width="9" height="10" rx="0.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M2.5 11.5V2.5C2.5 1.94772 2.94772 1.5 3.5 1.5H10.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+<pre><code><span class="tok-method">GET</span> <span class="tok-tag">&lt;INDEX_NAME&gt;</span>/_search
+<span class="tok-brace">{</span>
+  <span class="tok-key">"query"</span><span class="tok-punc">:</span> <span class="tok-brace">{</span>
+    <span class="tok-key">"knn"</span><span class="tok-punc">:</span> <span class="tok-brace">{</span>
+      <span class="tok-key">"&lt;DENSE_VECTOR_FIELD_NAME&gt;"</span><span class="tok-punc">:</span> <span class="tok-brace">{</span>
+        <span class="tok-key">"vector"</span><span class="tok-punc">:</span> <span class="tok-brace">[</span>...<span class="tok-brace">]</span><span class="tok-punc">,</span>
+        <span class="tok-key">"k"</span><span class="tok-punc">:</span> <span class="tok-tag">&lt;NUMBER_OF_CANDIDATES&gt;</span><span class="tok-punc">,</span>
+        <span class="tok-key">"method_parameters"</span><span class="tok-punc">:</span> <span class="tok-brace">{</span>
+          <span class="tok-key">"ef_search"</span><span class="tok-punc">:</span> <span class="tok-tag">&lt;NUMBER_OF_CANDIDATES&gt;</span>
+        <span class="tok-brace">}</span><span class="tok-punc">,</span>
+        <span class="tok-key">"rescore"</span><span class="tok-punc">:</span> <span class="tok-brace">{</span>
+          <span class="tok-key">"oversample_factor"</span><span class="tok-punc">:</span> <span class="tok-tag">&lt;OVERSAMPLE&gt;</span>
+        <span class="tok-brace">}</span><span class="tok-punc">,</span>
+        <span class="tok-key">"filter"</span><span class="tok-punc">:</span> <span class="tok-brace">{</span>
+          <span class="tok-tag">&lt;SOME_FILTER&gt;</span>
+        <span class="tok-brace">}</span>
+      <span class="tok-brace">}</span>
+    <span class="tok-brace">}</span>
+  <span class="tok-brace">}</span><span class="tok-punc">,</span>
+  <span class="tok-key">"size"</span><span class="tok-punc">:</span> <span class="tok-tag">&lt;RESULT_SIZE&gt;</span><span class="tok-punc">,</span>
+  <span class="tok-key">"_source"</span><span class="tok-punc">:</span> <span class="tok-brace">{</span>
+    <span class="tok-key">"excludes"</span><span class="tok-punc">:</span> <span class="tok-brace">[</span>
+      <span class="tok-str">"&lt;DENSE_VECTOR_FIELD_NAME&gt;"</span>
+    <span class="tok-brace">]</span>
+  <span class="tok-brace">}</span>
+<span class="tok-brace">}</span></code></pre>
+      </div>
+
+      <p>Embedding this pattern inline in skill files seemed like the obvious move. It is the right pattern, after all. But as we will see, getting the pattern into the file is not the same as getting the agent to use it.</p>
 
       <h2 id="failed">What failed, and why it matters</h2>
 
@@ -1195,5 +1296,24 @@ footer {
 })();
 </script>
 
+<script>
+/* Copy code-block contents to clipboard, briefly switch icon */
+function copyCodeBlock(btn) {
+  var pre = btn.parentElement.querySelector('pre');
+  if (!pre) return;
+  var text = pre.innerText;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.classList.add('is-copied');
+      var original = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8.5L6.5 12L13 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      setTimeout(function() {
+        btn.classList.remove('is-copied');
+        btn.innerHTML = original;
+      }, 1500);
+    });
+  }
+}
+</script>
 </body>
 </html>
