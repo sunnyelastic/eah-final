@@ -2967,6 +2967,82 @@ a.blog-filter-opt--has-submenu:focus-visible span {
   .blog-series-wrap { grid-template-columns: 1fr; }
 }
 
+
+/* GitHub external link in secondary nav */
+.secondary-nav__github {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.secondary-nav__github .external-icon {
+  width: 11px;
+  height: 11px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.secondary-nav__github:hover .external-icon { opacity: 1; }
+
+/* Examples dropdown in secondary nav */
+.secondary-nav__dropdown {
+  position: relative;
+  display: inline-flex;
+}
+.secondary-nav__dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  /* inherit secondary-nav__section font/color from existing rule */
+}
+.secondary-nav__chev {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.secondary-nav__dropdown-btn[aria-expanded="true"] .secondary-nav__chev {
+  transform: rotate(180deg);
+}
+.secondary-nav__menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 180px;
+  background: var(--white, #FFF);
+  border: 1px solid var(--black, #111010);
+  z-index: 9999;
+}
+.secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
+.secondary-nav__menu-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--black, #111010);
+  text-decoration: none;
+  border-bottom: 1px solid var(--black, #111010);
+  transition: background 0.1s;
+}
+.secondary-nav__menu-opt:last-child { border-bottom: none; }
+.secondary-nav__menu-opt:hover { background: var(--cream, #F5F7FA); }
+.secondary-nav__menu-num {
+  font-size: 11px;
+  color: #595959;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.secondary-nav__menu-label { font-weight: 500; }
+
+/* Allow secondary-nav dropdown to escape the bar's overflow trap */
+.secondary-nav__bar { overflow-x: visible !important; overflow-y: visible !important; }
+.secondary-nav__dropdown:hover .secondary-nav__menu,
+.secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
 </style>
 </head>
 <body>
@@ -3049,8 +3125,36 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <span class="secondary-nav__divider" aria-hidden="true"></span>
       <a class="secondary-nav__section" href="sunny-elastic-results.html">Blog</a>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#tutorial">Tutorial</a>
-      <a class="secondary-nav__section" href="sunny-elastic-home.html#examples">Examples</a>
+      <div class="secondary-nav__dropdown">
+        <button class="secondary-nav__section secondary-nav__dropdown-btn" type="button" onclick="toggleExamplesDropdown(this)" aria-haspopup="true" aria-expanded="false">
+          Examples
+          <svg class="secondary-nav__chev" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="2,3 8,3 5,7" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="secondary-nav__menu" role="menu">
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">01</span>
+            <span class="secondary-nav__menu-label">Apps</span>
+          </a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">02</span>
+            <span class="secondary-nav__menu-label">Notebook</span>
+          </a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">03</span>
+            <span class="secondary-nav__menu-label">Glossary</span>
+          </a>
+        </div>
+      </div>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integration</a>
+      <a class="secondary-nav__section secondary-nav__github" href="https://github.com/elastic/elasticsearch-labs" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="external-icon">
+          <path d="M3 2H10V9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M10 2L3 9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </a>
     </div>
   </div>
 </nav>
@@ -3094,7 +3198,7 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Observability Labs&#39;)">Observability Labs</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Security Labs&#39;)">Security Labs</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;News&#39;)">News</a>
-      <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;All blogs&#39;)">All blogs</a>
+      <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;All&#39;)">All</a>
     </div>
   </div>
     <div class="blog-filter" data-filter="categories" data-default-label="Categories">
@@ -3198,21 +3302,11 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;PHP&#39;)">PHP</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Python&#39;)">Python</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Ruby&#39;)">Ruby</a>
+      <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;All coding languages&#39;)">All coding languages</a>
     </div>
   </div>
   </div>
-  <div class="blog-sort" data-filter="sort">
-    <button class="blog-sort-btn" onclick="toggleBlogFilter(this)">
-      <span>Sort: <strong>Newest</strong></span>
-      <svg class="blog-sort-chev" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><polygon points="2,4 10,4 6,9" fill="currentColor"/></svg>
-    </button>
-    <div class="blog-sort-menu">
-      <a href="#" class="blog-sort-opt is-active">Newest</a>
-      <a href="#" class="blog-sort-opt">Oldest</a>
-      <a href="#" class="blog-sort-opt">Most popular</a>
-      <a href="#" class="blog-sort-opt">A–Z</a>
-    </div>
-  </div>
+
 </div>
 
 <!-- BLOG RESULTS GRID — 9 cards (1 featured-2 + 8 clean) -->
@@ -3893,6 +3987,24 @@ document.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
     window.location.href = 'sunny-elastic-author.html';
+  }
+});
+</script>
+<script>
+/* Examples nav dropdown — toggle open/closed, close on outside click */
+function toggleExamplesDropdown(btn) {
+  var wrap = btn.closest('.secondary-nav__dropdown');
+  var isOpen = wrap.classList.contains('is-open');
+  wrap.classList.toggle('is-open');
+  btn.setAttribute('aria-expanded', !isOpen);
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.secondary-nav__dropdown')) {
+    document.querySelectorAll('.secondary-nav__dropdown.is-open').forEach(function(d) {
+      d.classList.remove('is-open');
+      var b = d.querySelector('.secondary-nav__dropdown-btn');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
   }
 });
 </script>
