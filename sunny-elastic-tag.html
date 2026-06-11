@@ -3019,6 +3019,226 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 .secondary-nav__bar { overflow-x: visible !important; overflow-y: visible !important; }
 .secondary-nav__dropdown:hover .secondary-nav__menu,
 .secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
+
+/* ── More articles section (image-free cards) ── */
+.more-articles {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--grid-margin, 96px) var(--space-16, 64px);
+}
+.more-articles__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--black, #111010);
+  padding-bottom: 12px;
+  border-bottom: 2px dotted var(--black, #111010);
+  margin-bottom: var(--space-8, 32px);
+}
+.more-articles__label-slash {
+  color: var(--color-text-subdued, #69707D);
+  font-weight: 500;
+}
+.more-articles__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gutter, 32px);
+}
+/* Image-free card variant — inherits all fig-card styles, just 16px padding */
+.fig-card--compact {
+  padding: 16px;
+}
+.fig-card--compact .fig-body {
+  padding: 0;
+}
+@media (max-width: 900px) {
+  .more-articles__grid { grid-template-columns: 1fr; }
+  .more-articles { padding: 0 16px var(--space-16, 64px); }
+}
+
+/* ── Slim cards section (no image, no para, tag below title) ── */
+.slim-cards {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--grid-margin, 96px) var(--space-16, 64px);
+}
+.slim-cards__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--black, #111010);
+  padding-bottom: 12px;
+  border-bottom: 2px dotted var(--black, #111010);
+  margin-bottom: var(--space-8, 32px);
+}
+.slim-cards__label-slash {
+  color: var(--color-text-subdued, #69707D);
+  font-weight: 500;
+}
+.slim-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--grid-gutter, 32px);
+}
+.fig-card--slim {
+  padding: 16px;
+}
+.fig-card--slim .fig-body {
+  padding: 0;
+}
+@media (max-width: 900px) {
+  .slim-cards__grid { grid-template-columns: 1fr; }
+  .slim-cards { padding: 0 16px var(--space-16, 64px); }
+}
+
+/* ── List-row section ── */
+.list-rows {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--grid-margin, 96px) var(--space-16, 64px);
+}
+.list-rows__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--black, #111010);
+  padding-bottom: 12px;
+  border-bottom: 2px dotted var(--black, #111010);
+  margin-bottom: 0;
+}
+.list-rows__label-slash {
+  color: var(--color-text-subdued, #69707D);
+}
+.list-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 20px 0;
+  border-bottom: 1px solid #E4E4E4;
+  position: relative;
+  text-decoration: none;
+  color: var(--black, #111010);
+}
+.list-row:hover .list-row__title {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+/* Left colour bar */
+.list-row__bar {
+  width: 3px;
+  align-self: stretch;
+  flex-shrink: 0;
+  margin-right: 20px;
+  border-radius: 2px;
+}
+.list-row__bar--es   { background: #00BFB3; }
+.list-row__bar--obs  { background: #FA744E; }
+.list-row__bar--sec  { background: #DD0A73; }
+.list-row__bar--news { background: var(--black, #111010); }
+/* Main content */
+.list-row__content {
+  flex: 1;
+  min-width: 0;
+}
+.list-row__meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-text-subdued, #69707D);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.list-row__meta-divider {
+  color: #C0C0C0;
+}
+.list-row__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--black, #111010);
+  margin-bottom: 12px;
+}
+.list-row__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.list-row__tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--black, #111010);
+  color: var(--black, #111010);
+  background: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.list-row__tag:hover {
+  background: var(--black, #111010);
+  color: #fff;
+}
+/* Right lab label */
+.list-row__lab {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-left: 32px;
+  padding-top: 2px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--black, #111010);
+}
+.list-row__lab--es   { color: var(--black, #111010); }
+.list-row__lab--obs  { color: var(--black, #111010); }
+.list-row__lab--sec  { color: var(--black, #111010); }
+.list-row__lab--news { color: var(--black, #111010); }
+.list-row__lab-sq {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+.list-row__lab--es   .list-row__lab-sq { background: #00BFB3; }
+.list-row__lab--obs  .list-row__lab-sq { background: #FA744E; }
+.list-row__lab--sec  .list-row__lab-sq { background: #DD0A73; }
+.list-row__lab--news .list-row__lab-sq { background: var(--black, #111010); }
+@media (max-width: 900px) {
+  .list-rows { padding: 0 16px var(--space-16, 64px); }
+  .list-row__lab { display: none; }
+  .list-row__title { font-size: 18px; }
+}
+
 </style>
 </head>
 <body>
@@ -3138,7 +3358,7 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 <!-- SECTION: Tag header -->
 <div class="section-strip">
   <div class="section-strip-inner">
-    <h2 class="section-strip-title" id="tag-title"><span class="section-strip-slash">//</span>Tag: AI</h2>
+    <h2 class="section-strip-title" id="tag-title"><span class="section-strip-slash">//</span>Category: AI</h2>
     <p class="section-strip-desc" id="tag-desc">Articles tagged AI</p>
   </div>
 </div>
@@ -3511,6 +3731,360 @@ a.blog-filter-opt--has-submenu:focus-visible span {
   </div>
 </div>
 
+<!-- MORE ARTICLES SECTION — image-free cards, 3-col, 16px padding -->
+<div class="more-articles">
+  <div class="more-articles__label">
+    <span class="more-articles__label-slash">/ </span>More articles
+  </div>
+  <div class="more-articles__grid">
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--compact">
+      <div class="fig-label-row">
+        <div class="fig-square fig-square-teal"></div>
+        <span class="fig-label-text">Elasticsearch Labs</span>
+      </div>
+      <div class="fig-tag-wrap" style="gap:12px;">
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Build a smarter RAG pipeline with Elasticsearch and Anthropic Claude</h3>
+        <p class="fig-para">A step-by-step walkthrough of building a retrieval-augmented generation pipeline using Elasticsearch as the vector store and Claude as the LLM.</p>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Sarah Chen</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">May 12, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--compact">
+      <div class="fig-label-row">
+        <div class="fig-square fig-square-teal"></div>
+        <span class="fig-label-text">Elasticsearch Labs</span>
+      </div>
+      <div class="fig-tag-wrap" style="gap:12px;">
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Hybrid Search')">Hybrid Search</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Hybrid RAG: combining BM25 with dense vectors for accurate retrieval</h3>
+        <p class="fig-para">Pure vector search misses exact-match queries. Pure lexical misses synonyms. Hybrid retrieval gives you the best of both — here is how.</p>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Sarah Chen</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Apr 21, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--compact">
+      <div class="fig-label-row">
+        <div class="fig-square fig-square-teal"></div>
+        <span class="fig-label-text">Elasticsearch Labs</span>
+      </div>
+      <div class="fig-tag-wrap" style="gap:12px;">
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Operations')">Operations</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Comparing embedding models: OpenAI vs Cohere vs ELSER vs open-source</h3>
+        <p class="fig-para">Benchmarks across recall, latency, and cost on a real-world dataset. Which embedding model should you actually use in production?</p>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">William Parker</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Apr 14, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--compact">
+      <div class="fig-label-row">
+        <div class="fig-square"></div>
+        <span class="fig-label-text">Observability Labs</span>
+      </div>
+      <div class="fig-tag-wrap" style="gap:12px;">
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Jina AI')">Jina AI</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Multilingual semantic search with Jina embeddings v3</h3>
+        <p class="fig-para">Build a search experience that works in 100+ languages. We benchmark Jina v3 multilingual embeddings against alternatives on Elasticsearch.</p>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Emily Johnson</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Mar 31, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--compact">
+      <div class="fig-label-row">
+        <div class="fig-square"></div>
+        <span class="fig-label-text">Observability Labs</span>
+      </div>
+      <div class="fig-tag-wrap" style="gap:12px;">
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Developer Experience')">Developer Experience</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Production patterns for LangChain + Elasticsearch</h3>
+        <p class="fig-para">Self-query retrievers, multi-vector indexes, hybrid search, and observability — what we learned from running LangChain at scale.</p>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Marcus Webb</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Mar 24, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--compact">
+      <div class="fig-label-row">
+        <div class="fig-square fig-square-pink"></div>
+        <span class="fig-label-text">Security Labs</span>
+      </div>
+      <div class="fig-tag-wrap" style="gap:12px;">
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+        <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Operations')">Operations</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Detecting model drift in production with Elastic ML</h3>
+        <p class="fig-para">When your LLM starts hallucinating more than usual, you need to know fast. Set up anomaly detection on embedding distributions.</p>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Jacob Anderson</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Apr 7, 2025</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- SLIM CARDS SECTION — no image, no para, tag below title -->
+<div class="slim-cards">
+  <div class="slim-cards__label">
+    <span class="slim-cards__label-slash">/ </span>Related articles
+  </div>
+  <div class="slim-cards__grid">
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--slim">
+      <div class="fig-label-row">
+        <div class="fig-square fig-square-teal"></div>
+        <span class="fig-label-text">Elasticsearch Labs</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Build a smarter RAG pipeline with Elasticsearch and Anthropic Claude</h3>
+        <div class="fig-tag-wrap" style="gap:12px;">
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span>
+        </div>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Sarah Chen</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">May 12, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--slim">
+      <div class="fig-label-row">
+        <div class="fig-square fig-square-teal"></div>
+        <span class="fig-label-text">Elasticsearch Labs</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Inference API deep dive: bring your own model to Elasticsearch</h3>
+        <div class="fig-tag-wrap" style="gap:12px;">
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Integrations')">Integrations</span>
+        </div>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Marcus Webb</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">May 5, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--slim">
+      <div class="fig-label-row">
+        <div class="fig-square fig-square-teal"></div>
+        <span class="fig-label-text">Elasticsearch Labs</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Hybrid RAG: combining BM25 with dense vectors for accurate retrieval</h3>
+        <div class="fig-tag-wrap" style="gap:12px;">
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Hybrid Search')">Hybrid Search</span>
+        </div>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Sarah Chen</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Apr 21, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--slim">
+      <div class="fig-label-row">
+        <div class="fig-square"></div>
+        <span class="fig-label-text">Observability Labs</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Multilingual semantic search with Jina embeddings v3</h3>
+        <div class="fig-tag-wrap" style="gap:12px;">
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Jina AI')">Jina AI</span>
+        </div>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Emily Johnson</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Mar 31, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--slim">
+      <div class="fig-label-row">
+        <div class="fig-square"></div>
+        <span class="fig-label-text">Observability Labs</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Production patterns for LangChain + Elasticsearch</h3>
+        <div class="fig-tag-wrap" style="gap:12px;">
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Developer Experience')">Developer Experience</span>
+        </div>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Marcus Webb</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Mar 24, 2025</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="sunny-elastic-article.html" class="fig-card fig-card--slim">
+      <div class="fig-label-row">
+        <div class="fig-square fig-square-pink"></div>
+        <span class="fig-label-text">Security Labs</span>
+      </div>
+      <div class="fig-body">
+        <h3 class="fig-title">Detecting lateral movement at scale with Elasticsearch SIEM rules</h3>
+        <div class="fig-tag-wrap" style="gap:12px;">
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+          <span class="fig-pill-tag" role="link" tabindex="0" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Operations')">Operations</span>
+        </div>
+        <div class="fig-author-row">
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">William Parker</span>
+          <div class="fig-divider"></div>
+          <span class="fig-date">Apr 28, 2025</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<!-- LIST-ROW SECTION -->
+<div class="list-rows">
+  <div class="list-rows__label">
+    <span class="list-rows__label-slash">/ </span>Latest
+  </div>
+
+  <a href="sunny-elastic-article.html" class="list-row">
+    <div class="list-row__bar list-row__bar--es"></div>
+    <div class="list-row__content">
+      <div class="list-row__meta">August 15, 2026 <span class="list-row__meta-divider">|</span> Sarah Chen</div>
+      <div class="list-row__title">Agent Builder, beyond the chatbox: Introducing Augmented Infrastructure</div>
+      <div class="list-row__tags">
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Developer Experience')">Developer Experience</span>
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Integrations')">Integrations</span>
+      </div>
+    </div>
+    <span class="list-row__lab list-row__lab--es"><span class="list-row__lab-sq"></span>Search</span>
+  </a>
+
+  <a href="sunny-elastic-article.html" class="list-row">
+    <div class="list-row__bar list-row__bar--obs"></div>
+    <div class="list-row__content">
+      <div class="list-row__meta">August 15, 2026</div>
+      <div class="list-row__title">Bringing Fire to Elasticsearch: Adding Native Prometheus API Support</div>
+      <div class="list-row__tags">
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Developer Experience')">Developer Experience</span>
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Integrations')">Integrations</span>
+      </div>
+    </div>
+    <span class="list-row__lab list-row__lab--obs"><span class="list-row__lab-sq"></span>Observability</span>
+  </a>
+
+  <a href="sunny-elastic-article.html" class="list-row">
+    <div class="list-row__bar list-row__bar--sec"></div>
+    <div class="list-row__content">
+      <div class="list-row__meta">August 15, 2026</div>
+      <div class="list-row__title">From API key to live threat detections in minutes: how Elastic Security ingests Google Threat Intelligence</div>
+      <div class="list-row__tags">
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Developer Experience')">Developer Experience</span>
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Integrations')">Integrations</span>
+      </div>
+    </div>
+    <span class="list-row__lab list-row__lab--sec"><span class="list-row__lab-sq"></span>Security</span>
+  </a>
+
+  <a href="sunny-elastic-article.html" class="list-row">
+    <div class="list-row__bar list-row__bar--es"></div>
+    <div class="list-row__content">
+      <div class="list-row__meta">August 15, 2026</div>
+      <div class="list-row__title">Best practices for building a modern app with vector search</div>
+      <div class="list-row__tags">
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span>
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Hybrid Search')">Hybrid Search</span>
+      </div>
+    </div>
+    <span class="list-row__lab list-row__lab--es"><span class="list-row__lab-sq"></span>Search</span>
+  </a>
+
+  <a href="sunny-elastic-article.html" class="list-row">
+    <div class="list-row__bar list-row__bar--es"></div>
+    <div class="list-row__content">
+      <div class="list-row__meta">July 30, 2026</div>
+      <div class="list-row__title">Monitoring AI workloads: token usage, latency, and cost tracking in production</div>
+      <div class="list-row__tags">
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Operations')">Operations</span>
+      </div>
+    </div>
+    <span class="list-row__lab list-row__lab--es"><span class="list-row__lab-sq"></span>Search</span>
+  </a>
+
+  <a href="sunny-elastic-article.html" class="list-row">
+    <div class="list-row__bar list-row__bar--obs"></div>
+    <div class="list-row__content">
+      <div class="list-row__meta">July 22, 2026 <span class="list-row__meta-divider">|</span> Marcus Webb</div>
+      <div class="list-row__title">Production patterns for LangChain + Elasticsearch at scale</div>
+      <div class="list-row__tags">
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span>
+        <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Developer Experience')">Developer Experience</span>
+      </div>
+    </div>
+    <span class="list-row__lab list-row__lab--obs"><span class="list-row__lab-sq"></span>Observability</span>
+  </a>
+
+</div>
+
+
+
 <!-- FOOTER -->
 <footer>
 <div class="footer-inner">
@@ -3792,9 +4366,9 @@ document.addEventListener('click', function(e) {
   const tag = params.get('tag');
   if (!tag) return;
 
-  document.title = 'Tag: ' + tag;
+  document.title = 'Category: ' + tag;
   const titleEl = document.getElementById('tag-title');
-  if (titleEl) titleEl.innerHTML = '<span class="section-strip-slash">//</span>Tag: ' + tag;
+  if (titleEl) titleEl.innerHTML = '<span class="section-strip-slash">//</span>Category: ' + tag;
   const descEl = document.getElementById('tag-desc');
   if (descEl) descEl.textContent = 'Articles tagged ' + tag;
 
