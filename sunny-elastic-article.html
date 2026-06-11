@@ -856,8 +856,10 @@ footer {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 var(--grid-margin, 96px);
-  display: flex;                                          /* allow bar to shrink to content width */
-  justify-content: flex-start;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 .secondary-nav__bar {
   display: inline-flex;                                    /* hug the items, not full width */
@@ -1258,6 +1260,144 @@ a.related-card__tag:hover {
 .secondary-nav__bar { overflow-x: visible !important; overflow-y: visible !important; }
 .secondary-nav__dropdown:hover .secondary-nav__menu,
 .secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
+/* ── List-row section ── */
+.list-rows {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 var(--grid-margin, 96px) var(--space-16, 64px);
+}
+.list-rows__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--black, #111010);
+  padding-bottom: 12px;
+  border-bottom: 2px dotted var(--black, #111010);
+  margin-bottom: 0;
+}
+.list-rows__label-slash {
+  color: var(--color-text-subdued, #69707D);
+}
+.list-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 20px 0;
+  border-bottom: 1px solid #E4E4E4;
+  position: relative;
+  text-decoration: none;
+  color: var(--black, #111010);
+}
+.list-row:hover .list-row__title {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+/* Left colour bar */
+.list-row__bar {
+  width: 3px;
+  align-self: stretch;
+  flex-shrink: 0;
+  margin-right: 20px;
+  border-radius: 2px;
+}
+.list-row__bar--es   { background: #00BFB3; }
+.list-row__bar--obs  { background: #FA744E; }
+.list-row__bar--sec  { background: #DD0A73; }
+.list-row__bar--news { background: var(--black, #111010); }
+/* Main content */
+.list-row__content {
+  flex: 1;
+  min-width: 0;
+}
+.list-row__meta {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-text-subdued, #69707D);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.list-row__meta-divider {
+  color: #C0C0C0;
+}
+.list-row__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--black, #111010);
+  margin-bottom: 12px;
+}
+.list-row__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.list-row__tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--black, #111010);
+  color: var(--black, #111010);
+  background: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.list-row__tag:hover {
+  background: var(--black, #111010);
+  color: #fff;
+}
+/* Right lab label */
+.list-row__lab {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-left: 32px;
+  padding-top: 2px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--black, #111010);
+}
+.list-row__lab--es   { color: var(--black, #111010); }
+.list-row__lab--obs  { color: var(--black, #111010); }
+.list-row__lab--sec  { color: var(--black, #111010); }
+.list-row__lab--news { color: var(--black, #111010); }
+.list-row__lab-sq {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+.list-row__lab--es   .list-row__lab-sq { background: #00BFB3; }
+.list-row__lab--obs  .list-row__lab-sq { background: #FA744E; }
+.list-row__lab--sec  .list-row__lab-sq { background: #DD0A73; }
+.list-row__lab--news .list-row__lab-sq { background: var(--black, #111010); }
+@media (max-width: 900px) {
+  .list-rows { padding: 0 16px var(--space-16, 64px); }
+  .list-row__lab { display: none; }
+  .list-row__title { font-size: 18px; }
+}
+
 </style>
 </head>
 <body>
@@ -1332,12 +1472,15 @@ a.related-card__tag:hover {
 <!-- ============== SECONDARY NAV (Sticky Glass) ============== -->
 <nav class="secondary-nav" aria-label="Secondary">
   <div class="secondary-nav__inner">
+    <!-- Left bar: lab tabs -->
     <div class="secondary-nav__bar">
       <a class="secondary-nav__lab secondary-nav__lab--es is-active" href="sunny-elastic-home.html">Elasticsearch Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--obs" href="sunny-elastic-observability.html">Observability Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--sec" href="sunny-elastic-security.html">Security Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--news" href="#">News</a>
-      <span class="secondary-nav__divider" aria-hidden="true"></span>
+    </div>
+    <!-- Right bar: section sub-tabs -->
+    <div class="secondary-nav__bar">
       <a class="secondary-nav__section" href="sunny-elastic-results.html">Blog</a>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#tutorial">Tutorial</a>
       <div class="secondary-nav__dropdown">
@@ -1595,68 +1738,75 @@ a.related-card__tag:hover {
 
       <!-- ─────────────── Related Content ─────────────── -->
       <section class="article-related">
-        <h3 class="article-related__title">Related Content</h3>
-        <div class="article-related__grid">
-
-          <article class="related-card">
-            <div class="related-card__tags">
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Agentic+AI">Agentic AI</a>
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Vector+Database">Vector Database</a>
-              <span class="related-card__tag related-card__tag--more">+1</span>
-            </div>
-            <p class="related-card__date">June 10, 2026</p>
-            <h4 class="related-card__title"><a href="sunny-elastic-article.html">Your AI agent reads the fine print: building a RAG pipeline over EU regulations with Elasticsearch and OGX</a></h4>
-            <p class="related-card__desc">Learn how to configure Elasticsearch as an OGX vector store, ingest EU regulation PDFs and build a Python RAG agent that runs hybrid BM25 and vector search with source-level citations.</p>
-            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Enrico+Zimuel">Enrico Zimuel</a></div>
-          </article>
-
-          <article class="related-card">
-            <div class="related-card__tags">
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Vector+Database">Vector Database</a>
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Inside+Elastic">Inside Elastic</a>
-            </div>
-            <p class="related-card__date">June 8, 2026</p>
-            <h4 class="related-card__title"><a href="sunny-elastic-article.html">Elasticsearch simdvec deep-dive: Walking the memory tightrope to 2x better vector throughput</a></h4>
-            <p class="related-card__desc">A deep dive into four optimizations (cascade unrolling, batch prefetching, dim-axis unrolling, a structural refactor) that pushed Elasticsearch simdvec to 2x vector throughput by working with the CPU, not against it.</p>
-            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Lorenzo+Dematte">Lorenzo Dematte</a>, <a href="sunny-elastic-author.html?author=Florian+Bernd">Florian Bernd</a> and <a href="sunny-elastic-author.html?author=Chris+Hegarty">Chris Hegarty</a></div>
-          </article>
-
-          <article class="related-card">
-            <div class="related-card__tags">
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Agentic+AI">Agentic AI</a>
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Python">Python</a>
-              <span class="related-card__tag related-card__tag--more">+1</span>
-            </div>
-            <p class="related-card__date">June 5, 2026</p>
-            <h4 class="related-card__title"><a href="sunny-elastic-article.html">Your Elastic agent, Google's ADK, and zero custom APIs: building "Lucky Planet" over A2A</a></h4>
-            <p class="related-card__desc">Elastic Agent Builder's native A2A endpoint lets Google's ADK orchestrate a remote agent, with no custom REST API. Watch it work in 'Lucky Planet,' a random-exoplanet game built end-to-end.</p>
-            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Jonathan+Simon">Jonathan Simon</a></div>
-          </article>
-
-          <article class="related-card">
-            <div class="related-card__tags">
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Agentic+AI">Agentic AI</a>
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Kibana">Kibana</a>
-            </div>
-            <p class="related-card__date">June 4, 2026</p>
-            <h4 class="related-card__title"><a href="sunny-elastic-article.html">137,000 people, zero human decisions: agentic disaster response with Elasticsearch</a></h4>
-            <p class="related-card__desc">Find out how a Kibana detection rule, a workflow and an AI agent automatically relocated 137,000 military personnel across seven installations when a hurricane hit, no dispatcher required.</p>
-            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Alec+Carpenter">Alec Carpenter</a></div>
-          </article>
-
-          <article class="related-card">
-            <div class="related-card__tags">
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Agentic+AI">Agentic AI</a>
-              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=.NET">.NET</a>
-              <span class="related-card__tag related-card__tag--more">+1</span>
-            </div>
-            <p class="related-card__date">June 1, 2026</p>
-            <h4 class="related-card__title"><a href="sunny-elastic-article.html">Build a RAG agent with Elasticsearch and GitHub Copilot SDK</a></h4>
-            <p class="related-card__desc">Wire Elasticsearch into the GitHub Copilot SDK as a RAG tool in five lines of C#, grounding your agent in your own logs, docs and data instead of model training data.</p>
-            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Greg+Crist">Greg Crist</a></div>
-          </article>
-
+        <div class="list-rows__label" style="margin-bottom: var(--space-4, 16px);">
+          <span class="list-rows__label-slash">/ </span>Related Content
         </div>
+
+        <a href="sunny-elastic-article.html" class="list-row">
+          <div class="list-row__bar list-row__bar--es"></div>
+          <div class="list-row__content">
+            <div class="list-row__meta">June 10, 2026 <span class="list-row__meta-divider">|</span> Enrico Zimuel</div>
+            <div class="list-row__title">Your AI agent reads the fine print: building a RAG pipeline over EU regulations with Elasticsearch and OGX</div>
+            <div class="list-row__tags">
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Agentic AI')">Agentic AI</span>
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span>
+            </div>
+          </div>
+          <span class="list-row__lab list-row__lab--es"><span class="list-row__lab-sq"></span>Elasticsearch Labs</span>
+        </a>
+
+        <a href="sunny-elastic-article.html" class="list-row">
+          <div class="list-row__bar list-row__bar--es"></div>
+          <div class="list-row__content">
+            <div class="list-row__meta">June 8, 2026 <span class="list-row__meta-divider">|</span> Lorenzo Dematte</div>
+            <div class="list-row__title">Elasticsearch simdvec deep-dive: Walking the memory tightrope to 2x better vector throughput</div>
+            <div class="list-row__tags">
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span>
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Inside Elastic')">Inside Elastic</span>
+            </div>
+          </div>
+          <span class="list-row__lab list-row__lab--es"><span class="list-row__lab-sq"></span>Elasticsearch Labs</span>
+        </a>
+
+        <a href="sunny-elastic-article.html" class="list-row">
+          <div class="list-row__bar list-row__bar--es"></div>
+          <div class="list-row__content">
+            <div class="list-row__meta">June 5, 2026 <span class="list-row__meta-divider">|</span> Jonathan Simon</div>
+            <div class="list-row__title">Your Elastic agent, Google's ADK, and zero custom APIs: building "Lucky Planet" over A2A</div>
+            <div class="list-row__tags">
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Agentic AI')">Agentic AI</span>
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Python')">Python</span>
+            </div>
+          </div>
+          <span class="list-row__lab list-row__lab--es"><span class="list-row__lab-sq"></span>Elasticsearch Labs</span>
+        </a>
+
+        <a href="sunny-elastic-article.html" class="list-row">
+          <div class="list-row__bar list-row__bar--obs"></div>
+          <div class="list-row__content">
+            <div class="list-row__meta">June 4, 2026 <span class="list-row__meta-divider">|</span> Alec Carpenter</div>
+            <div class="list-row__title">137,000 people, zero human decisions: agentic disaster response with Elasticsearch</div>
+            <div class="list-row__tags">
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Agentic AI')">Agentic AI</span>
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Kibana')">Kibana</span>
+            </div>
+          </div>
+          <span class="list-row__lab list-row__lab--obs"><span class="list-row__lab-sq"></span>Observability Labs</span>
+        </a>
+
+        <a href="sunny-elastic-article.html" class="list-row">
+          <div class="list-row__bar list-row__bar--sec"></div>
+          <div class="list-row__content">
+            <div class="list-row__meta">June 1, 2026 <span class="list-row__meta-divider">|</span> Greg Crist</div>
+            <div class="list-row__title">Build a RAG agent with Elasticsearch and GitHub Copilot SDK</div>
+            <div class="list-row__tags">
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Agentic AI')">Agentic AI</span>
+              <span class="list-row__tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('.NET'")">.NET</span>
+            </div>
+          </div>
+          <span class="list-row__lab list-row__lab--sec"><span class="list-row__lab-sq"></span>Security Labs</span>
+        </a>
+
       </section>
     </div>
 
