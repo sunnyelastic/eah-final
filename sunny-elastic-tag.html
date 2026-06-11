@@ -3138,7 +3138,7 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 <!-- SECTION: Tag header -->
 <div class="section-strip">
   <div class="section-strip-inner">
-    <h2 class="section-strip-title" id="tag-title"><span class="section-strip-slash">//</span>Tag: AI</h2>
+    <h2 class="section-strip-title" id="tag-title"><span class="section-strip-slash">//</span>Category: AI</h2>
     <p class="section-strip-desc" id="tag-desc">Articles tagged AI</p>
   </div>
 </div>
@@ -3792,9 +3792,9 @@ document.addEventListener('click', function(e) {
   const tag = params.get('tag');
   if (!tag) return;
 
-  document.title = 'Tag: ' + tag;
+  document.title = 'Category: ' + tag;
   const titleEl = document.getElementById('tag-title');
-  if (titleEl) titleEl.innerHTML = '<span class="section-strip-slash">//</span>Tag: ' + tag;
+  if (titleEl) titleEl.innerHTML = '<span class="section-strip-slash">//</span>Category: ' + tag;
   const descEl = document.getElementById('tag-desc');
   if (descEl) descEl.textContent = 'Articles tagged ' + tag;
 
