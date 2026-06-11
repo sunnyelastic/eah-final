@@ -1291,10 +1291,10 @@ footer {
   color: #2f2f2f;
   margin: 0;
 }
-/* Vertical divider */
+/* Vertical divider — matches the dashed style of the "Featured" header line */
 .hero-divider {
-  width: 1px;
-  background: var(--black);
+  width: 0;
+  border-left: 1px dashed #2f2f2f;
   align-self: stretch;
 }
 /* Right list */
@@ -1305,7 +1305,7 @@ footer {
 }
 .hero-list-item {
   padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--black);
+  border-bottom: 1px dashed #2f2f2f;
 }
 .hero-list-item:first-child {
   padding-top: 0;
@@ -3313,6 +3313,31 @@ a.blog-filter-opt--has-submenu:focus-visible span {
   height: 16px;
   shape-rendering: crispEdges;
 }
+
+/* ── Hero FEATURED label + dashed underline (spans both columns) ── */
+.hero-featured-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: var(--space-4, 16px);
+  margin-bottom: var(--space-6, 24px);
+  border-bottom: 1px dashed #2f2f2f;
+}
+.hero-featured-icon {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.hero-featured-label {
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--black, #111010);
+}
+
 </style>
 </head>
 <body>
@@ -3412,6 +3437,23 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 
 <!-- HERO FEATURED LAYOUT -->
 <div class="hero-section-wrap">
+    <!-- "★ FEATURED" label + teal dashed underline spanning both columns -->
+  <div class="hero-featured-header">
+    <span class="hero-featured-icon" aria-hidden="true">
+      <svg viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="0" width="2" height="2" fill="#00BFB3"/>
+        <rect x="6" y="4" width="2" height="2" fill="#00BFB3"/>
+        <rect x="0" y="6" width="2" height="2" fill="#00BFB3"/>
+        <rect x="4" y="6" width="2" height="2" fill="#00BFB3"/>
+        <rect x="8" y="6" width="2" height="2" fill="#00BFB3"/>
+        <rect x="12" y="6" width="2" height="2" fill="#00BFB3"/>
+        <rect x="6" y="8" width="2" height="2" fill="#00BFB3"/>
+        <rect x="6" y="12" width="2" height="2" fill="#00BFB3"/>
+      </svg>
+    </span>
+    <span class="hero-featured-label">Featured</span>
+  </div>
+
   <div class="hero-layout">
 
   <!-- LEFT: Featured article — existing fig-card format -->
