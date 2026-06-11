@@ -961,6 +961,303 @@ footer {
 /* Author chips are now clickable links */
 a.author-chip { color: inherit; text-decoration: none; cursor: pointer; }
 a.author-chip:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+
+/* GitHub external link in secondary nav */
+.secondary-nav__github {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.secondary-nav__github .external-icon {
+  width: 11px;
+  height: 11px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.secondary-nav__github:hover .external-icon { opacity: 1; }
+/* ──────────────────────────────────────────────────
+   POST-ARTICLE SECTIONS:
+   Recommended reading, feedback widget, Related Content
+   ────────────────────────────────────────────────── */
+
+/* Recommended reading list */
+.article-recommended {
+  margin-top: var(--space-12, 48px);
+  padding-top: var(--space-8, 32px);
+  border-top: 1px dashed #2f2f2f;
+}
+.article-recommended__title,
+.article-related__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--black, #111010);
+  margin: 0 0 var(--space-4, 16px) 0;
+}
+.article-recommended__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+.article-recommended__list li {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--black, #111010);
+  padding-left: 20px;
+  position: relative;
+}
+.article-recommended__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  background: var(--black, #111010);
+}
+.article-page__content .article-recommended__list a {
+  color: var(--black, #111010);
+  text-decoration: none;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 0;
+  transition: text-decoration 0.1s;
+}
+.article-page__content .article-recommended__list a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--black, #111010);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.article-recommended__list code {
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 0.92em;
+  background: var(--cream, #F5F7FA);
+  padding: 1px 5px;
+  border: 1px solid var(--silver, #D3DAE6);
+}
+
+/* Feedback widget */
+.article-feedback {
+  margin-top: var(--space-10, 40px);
+  padding: var(--space-8, 32px);
+  background: var(--cream, #F5F7FA);
+  border: 1px solid var(--black, #111010);
+}
+.article-feedback__q {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--black, #111010);
+  margin: 0 0 var(--space-4, 16px) 0;
+}
+.article-feedback__opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3, 12px);
+  margin-bottom: var(--space-4, 16px);
+}
+.article-feedback__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: var(--space-2, 8px) var(--space-4, 16px);
+  background: var(--white, #FFF);
+  border: 1px solid var(--black, #111010);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--black, #111010);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.article-feedback__btn:hover {
+  background: var(--black, #111010);
+  color: var(--white, #FFF);
+}
+.article-feedback__btn.is-selected {
+  background: var(--black, #111010);
+  color: var(--white, #FFF);
+}
+.article-feedback__btn .emoji {
+  font-size: 18px;
+  line-height: 1;
+}
+.article-feedback__report {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #595959;
+  text-decoration: none;
+}
+.article-feedback__report:hover { color: var(--black, #111010); text-decoration: underline; }
+
+/* Related Content grid */
+.article-related {
+  margin-top: var(--space-12, 48px);
+  padding-top: var(--space-8, 32px);
+  border-top: 1px dashed #2f2f2f;
+}
+.article-related__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8, 32px) var(--space-8, 32px);
+}
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+  text-decoration: none;
+}
+.related-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--space-2, 8px);
+}
+.article-page__content .related-card__tag,
+a.related-card__tag {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--space-3, 12px);
+  border: 1px solid var(--black, #111010);
+  background: transparent;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 12px;
+  line-height: 14.31px;
+  color: #2f2f2f;
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-decoration: none;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 0;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.article-page__content .related-card__tag:hover,
+a.related-card__tag:hover {
+  background: var(--black, #111010);
+  color: var(--white, #FFF);
+  text-decoration: none;
+}
+.related-card__tag--more {
+  position: relative;
+  cursor: pointer;
+}
+.related-card__date {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: #595959;
+  margin: 0;
+}
+.related-card__title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.related-card__title a {
+  color: var(--black, #111010);
+  text-decoration: none;
+}
+.related-card__title a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+.related-card__desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #2f2f2f;
+  margin: 0;
+}
+.related-card__byline {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: #595959;
+  margin-top: var(--space-2, 8px);
+}
+.related-card__byline a {
+  color: var(--black, #111010);
+  text-decoration: none;
+}
+.related-card__byline a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 700px) {
+  .article-related__grid { grid-template-columns: 1fr; }
+}
+
+
+/* Examples dropdown in secondary nav */
+.secondary-nav__dropdown {
+  position: relative;
+  display: inline-flex;
+}
+.secondary-nav__dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  /* inherit secondary-nav__section font/color from existing rule */
+}
+.secondary-nav__chev {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.secondary-nav__dropdown-btn[aria-expanded="true"] .secondary-nav__chev {
+  transform: rotate(180deg);
+}
+.secondary-nav__menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 180px;
+  background: var(--white, #FFF);
+  border: 1px solid var(--black, #111010);
+  z-index: 9999;
+}
+.secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
+.secondary-nav__menu-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--black, #111010);
+  text-decoration: none;
+  border-bottom: 1px solid var(--black, #111010);
+  transition: background 0.1s;
+}
+.secondary-nav__menu-opt:last-child { border-bottom: none; }
+.secondary-nav__menu-opt:hover { background: var(--cream, #F5F7FA); }
+.secondary-nav__menu-num {
+  font-size: 11px;
+  color: #595959;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.secondary-nav__menu-label { font-weight: 500; }
+
+/* Allow secondary-nav dropdown to escape the bar's overflow trap */
+.secondary-nav__bar { overflow-x: visible !important; overflow-y: visible !important; }
+.secondary-nav__dropdown:hover .secondary-nav__menu,
+.secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
 </style>
 </head>
 <body>
@@ -1043,8 +1340,36 @@ a.author-chip:hover { text-decoration: underline; text-underline-offset: 3px; te
       <span class="secondary-nav__divider" aria-hidden="true"></span>
       <a class="secondary-nav__section" href="sunny-elastic-results.html">Blog</a>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#tutorial">Tutorial</a>
-      <a class="secondary-nav__section" href="sunny-elastic-home.html#examples">Examples</a>
+      <div class="secondary-nav__dropdown">
+        <button class="secondary-nav__section secondary-nav__dropdown-btn" type="button" onclick="toggleExamplesDropdown(this)" aria-haspopup="true" aria-expanded="false">
+          Examples
+          <svg class="secondary-nav__chev" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="2,3 8,3 5,7" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="secondary-nav__menu" role="menu">
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">01</span>
+            <span class="secondary-nav__menu-label">Apps</span>
+          </a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">02</span>
+            <span class="secondary-nav__menu-label">Notebook</span>
+          </a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">03</span>
+            <span class="secondary-nav__menu-label">Glossary</span>
+          </a>
+        </div>
+      </div>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integration</a>
+      <a class="secondary-nav__section secondary-nav__github" href="https://github.com/elastic/elasticsearch-labs" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="external-icon">
+          <path d="M3 2H10V9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M10 2L3 9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </a>
     </div>
   </div>
 </nav>
@@ -1233,6 +1558,106 @@ a.author-chip:hover { text-decoration: underline; text-underline-offset: 3px; te
       <p>That second one is the harder shift culturally. It asks teams that have spent years polishing their reference docs to also obsess over the half-dozen surfaces that actually route attention. The reference docs are still right. They're just no longer enough.</p>
 
       <p>We're continuing this work and we'll share more as we learn. If you're building developer tools and running similar experiments, we'd love to hear what's working for you and what isn't. The space is moving fast, and the answers are still wide open.</p>
+
+      <!-- ─────────────── Recommended reading ─────────────── -->
+      <section class="article-recommended">
+        <h3 class="article-recommended__title">Recommended reading</h3>
+        <ul class="article-recommended__list">
+          <li><a href="https://www.elastic.co/search-labs/blog/semantic-text-chunking-index-options" target="_blank" rel="noopener">Deep dive on <code>semantic_text</code> chunking options</a> for long documents.</li>
+          <li><a href="https://www.elastic.co/search-labs/blog/weighted-reciprocal-rank-fusion-rrf" target="_blank" rel="noopener">Weighted RRF</a> for fine-tuning hybrid search relevance.</li>
+          <li><a href="https://www.elastic.co/search-labs/blog/agent-builder-elastic-ga" target="_blank" rel="noopener">Agent Builder GA announcement</a> for the full feature overview.</li>
+          <li><a href="https://www.elastic.co/search-labs/blog/jina-embeddings-v5-text" target="_blank" rel="noopener">jina-embeddings-v5-text models</a> just released February 2026.</li>
+        </ul>
+      </section>
+
+      <!-- ─────────────── Feedback widget ─────────────── -->
+      <section class="article-feedback">
+        <p class="article-feedback__q">How helpful was this content?</p>
+        <div class="article-feedback__opts">
+          <button class="article-feedback__btn" type="button" onclick="selectFeedback(this)" data-value="not">
+            <span class="emoji">😔</span> Not helpful
+          </button>
+          <button class="article-feedback__btn" type="button" onclick="selectFeedback(this)" data-value="somewhat">
+            <span class="emoji">😐</span> Somewhat helpful
+          </button>
+          <button class="article-feedback__btn" type="button" onclick="selectFeedback(this)" data-value="very">
+            <span class="emoji">😁</span> Very helpful
+          </button>
+        </div>
+        <a class="article-feedback__report" href="https://discuss.elastic.co/c/elastic-community-ecosystem/elasticsearch-labs/101" target="_blank" rel="noopener">
+          Report an issue
+          <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="11" height="11">
+            <path d="M3 2H10V9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <path d="M10 2L3 9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </section>
+
+      <!-- ─────────────── Related Content ─────────────── -->
+      <section class="article-related">
+        <h3 class="article-related__title">Related Content</h3>
+        <div class="article-related__grid">
+
+          <article class="related-card">
+            <div class="related-card__tags">
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Agentic+AI">Agentic AI</a>
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Vector+Database">Vector Database</a>
+              <span class="related-card__tag related-card__tag--more">+1</span>
+            </div>
+            <p class="related-card__date">June 10, 2026</p>
+            <h4 class="related-card__title"><a href="sunny-elastic-article.html">Your AI agent reads the fine print: building a RAG pipeline over EU regulations with Elasticsearch and OGX</a></h4>
+            <p class="related-card__desc">Learn how to configure Elasticsearch as an OGX vector store, ingest EU regulation PDFs and build a Python RAG agent that runs hybrid BM25 and vector search with source-level citations.</p>
+            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Enrico+Zimuel">Enrico Zimuel</a></div>
+          </article>
+
+          <article class="related-card">
+            <div class="related-card__tags">
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Vector+Database">Vector Database</a>
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Inside+Elastic">Inside Elastic</a>
+            </div>
+            <p class="related-card__date">June 8, 2026</p>
+            <h4 class="related-card__title"><a href="sunny-elastic-article.html">Elasticsearch simdvec deep-dive: Walking the memory tightrope to 2x better vector throughput</a></h4>
+            <p class="related-card__desc">A deep dive into four optimizations (cascade unrolling, batch prefetching, dim-axis unrolling, a structural refactor) that pushed Elasticsearch simdvec to 2x vector throughput by working with the CPU, not against it.</p>
+            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Lorenzo+Dematte">Lorenzo Dematte</a>, <a href="sunny-elastic-author.html?author=Florian+Bernd">Florian Bernd</a> and <a href="sunny-elastic-author.html?author=Chris+Hegarty">Chris Hegarty</a></div>
+          </article>
+
+          <article class="related-card">
+            <div class="related-card__tags">
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Agentic+AI">Agentic AI</a>
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Python">Python</a>
+              <span class="related-card__tag related-card__tag--more">+1</span>
+            </div>
+            <p class="related-card__date">June 5, 2026</p>
+            <h4 class="related-card__title"><a href="sunny-elastic-article.html">Your Elastic agent, Google's ADK, and zero custom APIs: building "Lucky Planet" over A2A</a></h4>
+            <p class="related-card__desc">Elastic Agent Builder's native A2A endpoint lets Google's ADK orchestrate a remote agent, with no custom REST API. Watch it work in 'Lucky Planet,' a random-exoplanet game built end-to-end.</p>
+            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Jonathan+Simon">Jonathan Simon</a></div>
+          </article>
+
+          <article class="related-card">
+            <div class="related-card__tags">
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Agentic+AI">Agentic AI</a>
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Kibana">Kibana</a>
+            </div>
+            <p class="related-card__date">June 4, 2026</p>
+            <h4 class="related-card__title"><a href="sunny-elastic-article.html">137,000 people, zero human decisions: agentic disaster response with Elasticsearch</a></h4>
+            <p class="related-card__desc">Find out how a Kibana detection rule, a workflow and an AI agent automatically relocated 137,000 military personnel across seven installations when a hurricane hit, no dispatcher required.</p>
+            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Alec+Carpenter">Alec Carpenter</a></div>
+          </article>
+
+          <article class="related-card">
+            <div class="related-card__tags">
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=Agentic+AI">Agentic AI</a>
+              <a class="related-card__tag" href="sunny-elastic-tag.html?tag=.NET">.NET</a>
+              <span class="related-card__tag related-card__tag--more">+1</span>
+            </div>
+            <p class="related-card__date">June 1, 2026</p>
+            <h4 class="related-card__title"><a href="sunny-elastic-article.html">Build a RAG agent with Elasticsearch and GitHub Copilot SDK</a></h4>
+            <p class="related-card__desc">Wire Elasticsearch into the GitHub Copilot SDK as a RAG tool in five lines of C#, grounding your agent in your own logs, docs and data instead of model training data.</p>
+            <div class="related-card__byline">By: <a href="sunny-elastic-author.html?author=Greg+Crist">Greg Crist</a></div>
+          </article>
+
+        </div>
+      </section>
     </div>
 
   </div>
@@ -1314,6 +1739,31 @@ function copyCodeBlock(btn) {
     });
   }
 }
+
+/* Feedback widget — toggle is-selected on click, only one active at a time */
+function selectFeedback(btn) {
+  var siblings = btn.parentElement.querySelectorAll('.article-feedback__btn');
+  siblings.forEach(function(s) { s.classList.remove('is-selected'); });
+  btn.classList.add('is-selected');
+}
+</script>
+<script>
+/* Examples nav dropdown — toggle open/closed, close on outside click */
+function toggleExamplesDropdown(btn) {
+  var wrap = btn.closest('.secondary-nav__dropdown');
+  var isOpen = wrap.classList.contains('is-open');
+  wrap.classList.toggle('is-open');
+  btn.setAttribute('aria-expanded', !isOpen);
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.secondary-nav__dropdown')) {
+    document.querySelectorAll('.secondary-nav__dropdown.is-open').forEach(function(d) {
+      d.classList.remove('is-open');
+      var b = d.querySelector('.secondary-nav__dropdown-btn');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+  }
+});
 </script>
 </body>
 </html>
