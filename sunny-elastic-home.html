@@ -2049,7 +2049,7 @@ footer {
 }
 .int-card {
   position: relative;
-  height: 280px;
+  min-height: 280px;
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
@@ -2086,13 +2086,9 @@ footer {
 
 /* Logo zone — 64x64 placeholder centered */
 .int-card-logo {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.25s ease, max-height 0.35s ease, transform 0.35s ease;
-  max-height: 200px;
-  overflow: hidden;
 }
 .int-logo-placeholder {
   width: 64px;
@@ -2100,22 +2096,15 @@ footer {
   border: 1px solid var(--black);
   background: transparent;
 }
-.int-card:hover .int-card-logo {
-  opacity: 0;
-  max-height: 0;
-  transform: translateY(-8px);
-}
 
-/* Body — title at bottom by default; hover reveals desc + cta */
+/* Body — title, description, CTA all visible inline */
 .int-card-body {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
   flex-shrink: 0;
   margin-top: auto;
-  transition: transform 0.35s ease;
 }
-.int-card:hover .int-card-body { transform: translateY(-4px); }
 .int-card-title {
   font-family: var(--font-display);
   font-size: 16px;
@@ -2123,7 +2112,12 @@ footer {
   line-height: 1.25;
   color: var(--black);
   margin: 0;
-  transition: transform 0.35s ease;
+  transition: text-decoration 0.1s;
+}
+.int-card:hover .int-card-title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
 }
 .int-card-desc {
   font-family: var(--font-body);
@@ -2131,14 +2125,6 @@ footer {
   line-height: 1.5;
   color: #595959;
   margin: 0;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.25s ease 0.1s;
-}
-.int-card:hover .int-card-desc {
-  max-height: 180px;
-  opacity: 1;
 }
 .int-card-cta {
   display: inline-flex;
@@ -2146,18 +2132,9 @@ footer {
   gap: 6px;
   font-family: 'Space Mono', var(--font-mono), monospace;
   font-size: 12px;
-  text-transform: none;
   letter-spacing: 0.02em;
   color: #0B64DD;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.25s ease 0.15s;
   margin-top: var(--space-2);
-}
-.int-card:hover .int-card-cta {
-  max-height: 24px;
-  opacity: 1;
 }
 .int-arrow {
   width: 14px;
@@ -2944,6 +2921,104 @@ body.preload .int-card::after {
   }
 }
 
+
+/* GitHub external link in secondary nav */
+.secondary-nav__github {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.secondary-nav__github .external-icon {
+  width: 11px;
+  height: 11px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.secondary-nav__github:hover .external-icon { opacity: 1; }
+/* "+1" tag → click reveals a small box to the right with the extra tag(s) */
+.ex-row-tag--more {
+  position: relative;
+  cursor: pointer;
+}
+.ex-row-tag-popover {
+  display: none;
+  position: absolute;
+  left: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4px;
+  background: var(--white, #FFF);
+  border: 1px solid var(--black, #111010);
+  z-index: 20;
+  white-space: nowrap;
+}
+.ex-row-tag--more.is-open .ex-row-tag-popover {
+  display: inline-flex;
+  align-items: center;
+}
+
+
+/* Examples dropdown in secondary nav */
+.secondary-nav__dropdown {
+  position: relative;
+  display: inline-flex;
+}
+.secondary-nav__dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  /* inherit secondary-nav__section font/color from existing rule */
+}
+.secondary-nav__chev {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.secondary-nav__dropdown-btn[aria-expanded="true"] .secondary-nav__chev {
+  transform: rotate(180deg);
+}
+.secondary-nav__menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 180px;
+  background: var(--white, #FFF);
+  border: 1px solid var(--black, #111010);
+  z-index: 9999;
+}
+.secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
+.secondary-nav__menu-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--black, #111010);
+  text-decoration: none;
+  border-bottom: 1px solid var(--black, #111010);
+  transition: background 0.1s;
+}
+.secondary-nav__menu-opt:last-child { border-bottom: none; }
+.secondary-nav__menu-opt:hover { background: var(--cream, #F5F7FA); }
+.secondary-nav__menu-num {
+  font-size: 11px;
+  color: #595959;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.secondary-nav__menu-label { font-weight: 500; }
+
+/* Allow secondary-nav dropdown to escape the bar's overflow trap */
+.secondary-nav__bar { overflow-x: visible !important; overflow-y: visible !important; }
+.secondary-nav__dropdown:hover .secondary-nav__menu,
+.secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
 </style>
 </head>
 <body class="preload">
@@ -3034,8 +3109,36 @@ body.preload .int-card::after {
       <span class="secondary-nav__divider" aria-hidden="true"></span>
       <a class="secondary-nav__section" href="sunny-elastic-results.html">Blog</a>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#tutorial">Tutorial</a>
-      <a class="secondary-nav__section" href="sunny-elastic-home.html#examples">Examples</a>
+      <div class="secondary-nav__dropdown">
+        <button class="secondary-nav__section secondary-nav__dropdown-btn" type="button" onclick="toggleExamplesDropdown(this)" aria-haspopup="true" aria-expanded="false">
+          Examples
+          <svg class="secondary-nav__chev" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="2,3 8,3 5,7" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="secondary-nav__menu" role="menu">
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">01</span>
+            <span class="secondary-nav__menu-label">Apps</span>
+          </a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">02</span>
+            <span class="secondary-nav__menu-label">Notebook</span>
+          </a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">03</span>
+            <span class="secondary-nav__menu-label">Glossary</span>
+          </a>
+        </div>
+      </div>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integration</a>
+      <a class="secondary-nav__section secondary-nav__github" href="https://github.com/elastic/elasticsearch-labs" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="external-icon">
+          <path d="M3 2H10V9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M10 2L3 9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </a>
     </div>
   </div>
 </nav>
@@ -3114,6 +3217,10 @@ body.preload .int-card::after {
         <div class="fig-author-row">
           <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
           <span class="fig-author-name">Benjamin Scott</span>
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Lorenzo Dematte</span>
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Chris Hegarty</span>
           <div class="fig-divider"></div>
           <span class="fig-date">May 15, 2025</span>
         </div>
@@ -3137,6 +3244,8 @@ body.preload .int-card::after {
         <div class="fig-author-row" style="margin-top:var(--space-1);">
           <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
           <span class="fig-author-name">Sarah Chen</span>
+          <div class="fig-avatar"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="6.5" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 16c0-3.038 2.91-5.5 6.5-5.5s6.5 2.462 6.5 5.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <span class="fig-author-name">Florian Bernd</span>
           <div class="fig-divider"></div>
           <span class="fig-date">May 9, 2025</span>
         </div>
@@ -3400,7 +3509,7 @@ body.preload .int-card::after {
       </div>      <div class="ex-row" data-row="a2">
         <button class="ex-row-trigger" onclick="toggleExRow(this)">
           <a class="ex-row-title" href="sunny-elastic-examples-apps.html" onclick="event.stopPropagation()">Relevance Workbench</a>
-          <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span><span class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation();">+1</span></div>
+          <div class="ex-row-tags"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Vector Database')">Vector Database</span><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('AI')">AI</span><span class="ex-row-tag ex-row-tag--more" onclick="toggleMoreTags(event, this)">+1<span class="ex-row-tag-popover"><span role="link" class="ex-row-tag" onclick="event.preventDefault(); event.stopPropagation(); window.location.href='sunny-elastic-tag.html?tag=' + encodeURIComponent('Hybrid Search')">Hybrid Search</span></span></span></div>
           <span class="ex-row-toggle">
             <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><rect x="7" y="2" width="2" height="12" fill="currentColor"/><rect x="2" y="7" width="12" height="2" fill="currentColor"/></svg>
           </span>
@@ -3418,6 +3527,21 @@ body.preload .int-card::after {
         </div>
       </div>
     </div>
+<div class="ex-link-wrap ex-draggable" data-pos="4">
+      <div class="ex-panel">
+        <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
+        <div class="ex-panel-body">
+          <h3 class="ex-panel-title">Glossary</h3>
+          <p class="ex-glossary-desc">Definitions and reference material for every term, concept, and acronym used across the Elasticsearch Labs library.</p>
+          <a href="sunny-elastic-results.html" class="ex-glossary-cta" aria-label="Open glossary">
+            <svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    </div><!-- /ex-col-left -->
+
+    <div class="ex-col ex-col-right">
 <div class="ex-link-wrap ex-draggable" data-pos="3">
       <div class="ex-panel">
         <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
@@ -3603,85 +3727,6 @@ body.preload .int-card::after {
           </div><!-- /ex-rows -->
         </div><!-- /ex-panel-body -->
       </div><!-- /ex-panel -->
-    </div>
-    </div><!-- /ex-col-left -->
-
-    <div class="ex-col ex-col-right">
-<div class="ex-link-wrap ex-draggable" data-pos="1">
-      <div class="ex-panel">
-        <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
-        <div class="ex-panel-body">
-          <h3 class="ex-panel-title">Prompt Library</h3>
-          <div class="ex-rows">
-                        <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p0">
-        <span class="ex-row-title">Analyzing a Security Case</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p1">
-        <span class="ex-row-title">Asset Inventory Diagrams</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p2">
-        <span class="ex-row-title">CISO Incident Summary</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p3">
-        <span class="ex-row-title">Custom Elastic Crawl4AI connector</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p4">
-        <span class="ex-row-title">Expand Evaluation Dataset From Seed Indices</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <div class="ex-rows-more" data-collapsed="true">
-                        <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p5">
-        <span class="ex-row-title">Generate Seed Indices for Evaluation Data</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p6">
-        <span class="ex-row-title">Generate Test Cases for Evaluation</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p7">
-        <span class="ex-row-title">Meeting Summary Assistant</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p8">
-        <span class="ex-row-title">Negotiation Assistant</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p9">
-        <span class="ex-row-title">Security Policy Generator</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p10">
-        <span class="ex-row-title">Technical Discovery Assistant</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            <a href="sunny-elastic-examples-apps.html" class="ex-row-link" data-row="p11">
-        <span class="ex-row-title">Translate Alert Context into Language</span>
-        <span class="ex-row-arrow"><svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg></span>
-      </a>
-            </div>
-            <button class="ex-viewall-btn" onclick="toggleViewAll(this)">
-              <span class="ex-viewall-text">View all</span>
-              <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" class="ex-viewall-chev"><polygon points="2,4 10,4 6,9" fill="currentColor"/></svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-<div class="ex-link-wrap ex-draggable" data-pos="4">
-      <div class="ex-panel">
-        <div class="ex-panel-hd"><span class="ex-panel-square"></span></div>
-        <div class="ex-panel-body">
-          <h3 class="ex-panel-title">Glossary</h3>
-          <p class="ex-glossary-desc">Definitions and reference material for every term, concept, and acronym used across the Elasticsearch Labs library.</p>
-          <a href="sunny-elastic-results.html" class="ex-glossary-cta" aria-label="Open glossary">
-            <svg class="ex-arrow" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="3" width="3" height="3" fill="currentColor"/><rect x="12" y="6" width="3" height="3" fill="currentColor"/><rect x="0" y="9" width="3" height="3" fill="currentColor"/><rect x="3" y="9" width="3" height="3" fill="currentColor"/><rect x="6" y="9" width="3" height="3" fill="currentColor"/><rect x="9" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="9" width="3" height="3" fill="currentColor"/><rect x="15" y="9" width="3" height="3" fill="currentColor"/><rect x="12" y="12" width="3" height="3" fill="currentColor"/><rect x="9" y="15" width="3" height="3" fill="currentColor"/></svg>
-          </a>
-        </div>
-      </div>
     </div>
     </div><!-- /ex-col-right -->
 <!-- /ex-draggable glossary -->
@@ -4110,6 +4155,41 @@ function filterIntegrations(event, category) {
     setTimeout(scrollToHash, 60);
   });
 })();
+
+/* "+1" tag — toggle popover open/closed, close on outside click */
+function toggleMoreTags(event, el) {
+  event.preventDefault();
+  event.stopPropagation();
+  document.querySelectorAll('.ex-row-tag--more.is-open').forEach(function(other) {
+    if (other !== el) other.classList.remove('is-open');
+  });
+  el.classList.toggle('is-open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.ex-row-tag--more')) {
+    document.querySelectorAll('.ex-row-tag--more.is-open').forEach(function(el) {
+      el.classList.remove('is-open');
+    });
+  }
+});
+</script>
+<script>
+/* Examples nav dropdown — toggle open/closed, close on outside click */
+function toggleExamplesDropdown(btn) {
+  var wrap = btn.closest('.secondary-nav__dropdown');
+  var isOpen = wrap.classList.contains('is-open');
+  wrap.classList.toggle('is-open');
+  btn.setAttribute('aria-expanded', !isOpen);
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.secondary-nav__dropdown')) {
+    document.querySelectorAll('.secondary-nav__dropdown.is-open').forEach(function(d) {
+      d.classList.remove('is-open');
+      var b = d.querySelector('.secondary-nav__dropdown-btn');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+  }
+});
 </script>
 </body>
 </html>
