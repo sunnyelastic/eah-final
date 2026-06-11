@@ -798,8 +798,10 @@ footer {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 var(--grid-margin, 96px);
-  display: flex;                                          /* allow bar to shrink to content width */
-  justify-content: flex-start;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 .secondary-nav__bar {
   display: inline-flex;                                    /* hug the items, not full width */
@@ -1171,12 +1173,15 @@ a.author-chip:hover { text-decoration: underline; text-underline-offset: 3px; te
 <!-- ============== SECONDARY NAV (Sticky Glass) ============== -->
 <nav class="secondary-nav" aria-label="Secondary">
   <div class="secondary-nav__inner">
+    <!-- Left bar: lab tabs -->
     <div class="secondary-nav__bar">
       <a class="secondary-nav__lab secondary-nav__lab--es is-active" href="sunny-elastic-home.html">Elasticsearch Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--obs" href="sunny-elastic-observability.html">Observability Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--sec" href="sunny-elastic-security.html">Security Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--news" href="#">News</a>
-      <span class="secondary-nav__divider" aria-hidden="true"></span>
+    </div>
+    <!-- Right bar: section sub-tabs -->
+    <div class="secondary-nav__bar">
       <a class="secondary-nav__section" href="sunny-elastic-results.html">Blog</a>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#tutorial">Tutorial</a>
       <div class="secondary-nav__dropdown">
