@@ -2868,8 +2868,27 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 }
 /* Row 2, col 1 — filter dropdowns */
 .blog-filter-row { grid-column: 1; grid-row: 2; }
-/* Row 2, col 2 — Sort button */
-.blog-filter-area .blog-sort { grid-column: 2; grid-row: 2; margin-left: 0; justify-self: end; }
+/* Row 1, col 2 — "/ STAY UPDATED" label above subscribe */
+.blog-subscribe-label {
+  grid-column: 2;
+  grid-row: 1;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--black, #111010);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: end;
+}
+.blog-subscribe-label::before {
+  content: '/';
+  color: var(--color-text-subdued, #69707D);
+}
+/* Row 2, col 2 — Subscribe button */
+.blog-filter-area .blog-subscribe-btn { grid-column: 2; grid-row: 2; justify-self: end; }
 
 /* Precise hover — only the element under the cursor gets underlined */
 .fig-card-clean .fig-title:hover {
@@ -2896,6 +2915,110 @@ a.blog-filter-opt--has-submenu:focus-visible span {
   text-decoration-thickness: 1.5px;
 }
 
+
+/* Subscribe button — same level as filter dropdown, on the right */
+.blog-subscribe-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  padding: 0 var(--space-4, 16px);
+  height: 40px;
+  background: var(--white, #FFF);
+  color: var(--black, #111010);
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--black, #111010);
+  transition: background 0.15s, color 0.15s;
+}
+.blog-subscribe-btn:hover {
+  background: var(--black, #111010);
+  color: var(--white, #FFF);
+}
+.blog-subscribe-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* GitHub external link in secondary nav */
+.secondary-nav__github {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.secondary-nav__github .external-icon {
+  width: 11px;
+  height: 11px;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.secondary-nav__github:hover .external-icon { opacity: 1; }
+
+/* Examples dropdown in secondary nav */
+.secondary-nav__dropdown {
+  position: relative;
+  display: inline-flex;
+}
+.secondary-nav__dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  /* inherit secondary-nav__section font/color from existing rule */
+}
+.secondary-nav__chev {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.secondary-nav__dropdown-btn[aria-expanded="true"] .secondary-nav__chev {
+  transform: rotate(180deg);
+}
+.secondary-nav__menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 180px;
+  background: var(--white, #FFF);
+  border: 1px solid var(--black, #111010);
+  z-index: 9999;
+}
+.secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
+.secondary-nav__menu-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  font-family: 'Space Mono', var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--black, #111010);
+  text-decoration: none;
+  border-bottom: 1px solid var(--black, #111010);
+  transition: background 0.1s;
+}
+.secondary-nav__menu-opt:last-child { border-bottom: none; }
+.secondary-nav__menu-opt:hover { background: var(--cream, #F5F7FA); }
+.secondary-nav__menu-num {
+  font-size: 11px;
+  color: #595959;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.secondary-nav__menu-label { font-weight: 500; }
+
+/* Allow secondary-nav dropdown to escape the bar's overflow trap */
+.secondary-nav__bar { overflow-x: visible !important; overflow-y: visible !important; }
+.secondary-nav__dropdown:hover .secondary-nav__menu,
+.secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
 </style>
 </head>
 <body>
@@ -2978,8 +3101,36 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <span class="secondary-nav__divider" aria-hidden="true"></span>
       <a class="secondary-nav__section" href="sunny-elastic-results.html">Blog</a>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#tutorial">Tutorial</a>
-      <a class="secondary-nav__section" href="sunny-elastic-home.html#examples">Examples</a>
+      <div class="secondary-nav__dropdown">
+        <button class="secondary-nav__section secondary-nav__dropdown-btn" type="button" onclick="toggleExamplesDropdown(this)" aria-haspopup="true" aria-expanded="false">
+          Examples
+          <svg class="secondary-nav__chev" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="2,3 8,3 5,7" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="secondary-nav__menu" role="menu">
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">01</span>
+            <span class="secondary-nav__menu-label">Apps</span>
+          </a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">02</span>
+            <span class="secondary-nav__menu-label">Notebook</span>
+          </a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem">
+            <span class="secondary-nav__menu-num">03</span>
+            <span class="secondary-nav__menu-label">Glossary</span>
+          </a>
+        </div>
+      </div>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integration</a>
+      <a class="secondary-nav__section secondary-nav__github" href="https://github.com/elastic/elasticsearch-labs" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="external-icon">
+          <path d="M3 2H10V9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M10 2L3 9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </a>
     </div>
   </div>
 </nav>
@@ -2996,14 +3147,14 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 <div class="blog-filter-area">
   <span class="blog-filter-by-label">Filter by</span>
   <div class="blog-filter-row">
-    <div class="blog-filter" data-filter="blog" data-default-label="Blog">
+    <div class="blog-filter" data-filter="blog" data-default-label="All">
     <button class="blog-filter-btn" onclick="toggleBlogFilter(this)">
       <span class="blog-filter-clear" onclick="clearFilter(event, this)" role="button" aria-label="Clear filter" tabindex="0">
         <svg viewBox="0 0 10 10" width="8" height="8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M2 2 L8 8 M8 2 L2 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
         </svg>
       </span>
-      <span class="blog-filter-label">Blog</span>
+      <span class="blog-filter-label">All</span>
       <svg class="blog-filter-chev" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><polygon points="2,4 10,4 6,9" fill="currentColor"/></svg>
     </button>
     <div class="blog-filter-menu">
@@ -3011,7 +3162,7 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Observability Labs&#39;)">Observability Labs</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Security Labs&#39;)">Security Labs</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;News&#39;)">News</a>
-      <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;All blogs&#39;)">All blogs</a>
+      <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;All&#39;)">All</a>
     </div>
   </div>
     <div class="blog-filter" data-filter="categories" data-default-label="Categories">
@@ -3115,21 +3266,18 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;PHP&#39;)">PHP</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Python&#39;)">Python</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Ruby&#39;)">Ruby</a>
+      <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;All coding languages&#39;)">All coding languages</a>
     </div>
   </div>
   </div>
-  <div class="blog-sort" data-filter="sort">
-    <button class="blog-sort-btn" onclick="toggleBlogFilter(this)">
-      <span>Sort: <strong>Newest</strong></span>
-      <svg class="blog-sort-chev" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><polygon points="2,4 10,4 6,9" fill="currentColor"/></svg>
-    </button>
-    <div class="blog-sort-menu">
-      <a href="#" class="blog-sort-opt is-active">Newest</a>
-      <a href="#" class="blog-sort-opt">Oldest</a>
-      <a href="#" class="blog-sort-opt">Most popular</a>
-      <a href="#" class="blog-sort-opt">A–Z</a>
-    </div>
-  </div>
+  <span class="blog-subscribe-label">Stay updated</span>
+  <a href="#" class="blog-subscribe-btn">
+    <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="2" y="3" width="12" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <polyline points="2,4 8,9 14,4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    Subscribe
+  </a>
 </div>
 
 <div class="recent-section">
@@ -3681,6 +3829,24 @@ document.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
     window.location.href = 'sunny-elastic-author.html';
+  }
+});
+</script>
+<script>
+/* Examples nav dropdown — toggle open/closed, close on outside click */
+function toggleExamplesDropdown(btn) {
+  var wrap = btn.closest('.secondary-nav__dropdown');
+  var isOpen = wrap.classList.contains('is-open');
+  wrap.classList.toggle('is-open');
+  btn.setAttribute('aria-expanded', !isOpen);
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.secondary-nav__dropdown')) {
+    document.querySelectorAll('.secondary-nav__dropdown.is-open').forEach(function(d) {
+      d.classList.remove('is-open');
+      var b = d.querySelector('.secondary-nav__dropdown-btn');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
   }
 });
 </script>
