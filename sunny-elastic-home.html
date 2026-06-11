@@ -1290,10 +1290,10 @@ footer {
   color: #2f2f2f;
   margin: 0;
 }
-/* Vertical divider */
+/* Vertical divider — matches the dashed style of the "Featured" header line */
 .hero-divider {
-  width: 1px;
-  background: var(--black);
+  width: 0;
+  border-left: 1px dashed #2f2f2f;
   align-self: stretch;
 }
 /* Right list */
@@ -1304,7 +1304,7 @@ footer {
 }
 .hero-list-item {
   padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--black);
+  border-bottom: 1px dashed #2f2f2f;
 }
 .hero-list-item:first-child {
   padding-top: 0;
@@ -4082,11 +4082,9 @@ document.addEventListener('click', function(e) {
 /* Integration grid filter — show/hide cards by category, no scroll jump */
 function filterIntegrations(event, category) {
   event.preventDefault();
-  // Toggle active state on tabs
   document.querySelectorAll('.int-tab').forEach(function(tab) {
     tab.classList.toggle('is-active', tab.dataset.filter === category);
   });
-  // Show/hide cards by data-category
   document.querySelectorAll('.int-card').forEach(function(card) {
     if (category === 'all' || card.dataset.category === category) {
       card.style.display = '';
@@ -4095,6 +4093,23 @@ function filterIntegrations(event, category) {
     }
   });
 }
+
+/* Scroll to hash on page load — ensures anchor links from other pages
+   land correctly at #tutorial / #examples / #integration / #featured.
+   We re-run scrollIntoView after layout settles so fonts/images don't push
+   the target out of view. */
+(function() {
+  function scrollToHash() {
+    if (!window.location.hash) return;
+    var target = document.querySelector(window.location.hash);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+  window.addEventListener('load', function() {
+    setTimeout(scrollToHash, 60);
+  });
+})();
 </script>
 </body>
 </html>
