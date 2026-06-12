@@ -2548,21 +2548,36 @@ footer {
 .secondary-nav__section {
   color: rgba(0, 0, 0, 0.7);
   position: relative;
+  background: transparent;
 }
 .secondary-nav__section::before {
   content: "";
   position: absolute;
   left: 12px;
   right: 12px;
-  bottom: 4px;
-  height: 2px;
+  bottom: 6px;
+  height: 1.5px;
   background: transparent;
   transition: background 0.15s;
 }
-.secondary-nav__section:hover { color: var(--black, #111010); }
+.secondary-nav__section:hover {
+  color: var(--black, #111010);
+  background: transparent;
+}
 .secondary-nav__section:hover::before { background: var(--black, #111010); }
-.secondary-nav__section.is-active { color: var(--black, #111010); }
+.secondary-nav__section.is-active {
+  color: var(--black, #111010);
+  background: transparent;
+}
 .secondary-nav__section.is-active::before { background: var(--black, #111010); }
+/* Dropdown button — kill default button chrome */
+.secondary-nav__dropdown-btn {
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.secondary-nav__dropdown-btn:focus { outline: none; }
+.secondary-nav__dropdown-btn:focus-visible { outline: 2px solid var(--color-elastic-blue, #0B64DD); outline-offset: -2px; }
 
 /* Anchor scroll-margin so sticky nav doesn't cover section headers */
 #featured, #tutorial, #examples, #integration {
@@ -3030,21 +3045,36 @@ footer {
 .secondary-nav__section {
   color: rgba(0, 0, 0, 0.7);
   position: relative;
+  background: transparent;
 }
 .secondary-nav__section::before {
   content: "";
   position: absolute;
   left: 12px;
   right: 12px;
-  bottom: 4px;
-  height: 2px;
+  bottom: 6px;
+  height: 1.5px;
   background: transparent;
   transition: background 0.15s;
 }
-.secondary-nav__section:hover { color: var(--black, #111010); }
+.secondary-nav__section:hover {
+  color: var(--black, #111010);
+  background: transparent;
+}
 .secondary-nav__section:hover::before { background: var(--black, #111010); }
-.secondary-nav__section.is-active { color: var(--black, #111010); }
+.secondary-nav__section.is-active {
+  color: var(--black, #111010);
+  background: transparent;
+}
 .secondary-nav__section.is-active::before { background: var(--black, #111010); }
+/* Dropdown button — kill default button chrome */
+.secondary-nav__dropdown-btn {
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.secondary-nav__dropdown-btn:focus { outline: none; }
+.secondary-nav__dropdown-btn:focus-visible { outline: 2px solid var(--color-elastic-blue, #0B64DD); outline-offset: -2px; }
 
 /* Anchor scroll-margin so sticky nav doesn't cover section headers */
 #featured, #tutorial, #examples, #integration {
