@@ -2548,21 +2548,36 @@ footer {
 .secondary-nav__section {
   color: rgba(0, 0, 0, 0.7);
   position: relative;
+  background: transparent;
 }
 .secondary-nav__section::before {
   content: "";
   position: absolute;
   left: 12px;
   right: 12px;
-  bottom: 4px;
-  height: 2px;
+  bottom: 6px;
+  height: 1.5px;
   background: transparent;
   transition: background 0.15s;
 }
-.secondary-nav__section:hover { color: var(--black, #111010); }
+.secondary-nav__section:hover {
+  color: var(--black, #111010);
+  background: transparent;
+}
 .secondary-nav__section:hover::before { background: var(--black, #111010); }
-.secondary-nav__section.is-active { color: var(--black, #111010); }
+.secondary-nav__section.is-active {
+  color: var(--black, #111010);
+  background: transparent;
+}
 .secondary-nav__section.is-active::before { background: var(--black, #111010); }
+/* Dropdown button — kill default button chrome */
+.secondary-nav__dropdown-btn {
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.secondary-nav__dropdown-btn:focus { outline: none; }
+.secondary-nav__dropdown-btn:focus-visible { outline: 2px solid var(--color-elastic-blue, #0B64DD); outline-offset: -2px; }
 
 /* Anchor scroll-margin so sticky nav doesn't cover section headers */
 #featured, #tutorial, #examples, #integration {
@@ -3075,6 +3090,18 @@ body.preload .int-card::after {
 
 /* Allow secondary-nav dropdown to escape the bar's overflow trap */
 .secondary-nav__bar { overflow-x: visible !important; overflow-y: visible !important; }
+/* Hover/keep-open behaviour: a forgiving bridge between button and menu */
+.secondary-nav__dropdown::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 16px; /* invisible hover bridge so cursor doesn't leave the dropdown */
+  pointer-events: none;
+}
+.secondary-nav__dropdown:hover::after,
+.secondary-nav__dropdown.is-open::after { pointer-events: auto; }
 .secondary-nav__dropdown:hover .secondary-nav__menu,
 .secondary-nav__dropdown.is-open .secondary-nav__menu { display: block; }
 </style>
@@ -4223,21 +4250,40 @@ document.addEventListener('click', function(e) {
 </script>
 <script>
 /* Examples nav dropdown — toggle open/closed, close on outside click */
-function toggleExamplesDropdown(btn) {
-  var wrap = btn.closest('.secondary-nav__dropdown');
-  var isOpen = wrap.classList.contains('is-open');
-  wrap.classList.toggle('is-open');
-  btn.setAttribute('aria-expanded', !isOpen);
-}
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.secondary-nav__dropdown')) {
-    document.querySelectorAll('.secondary-nav__dropdown.is-open').forEach(function(d) {
-      d.classList.remove('is-open');
-      var b = d.querySelector('.secondary-nav__dropdown-btn');
-      if (b) b.setAttribute('aria-expanded', 'false');
+// Hover-based dropdown with grace period so the menu stays open
+//  - opens on mouseenter (button or menu)
+//  - closes only after the cursor has been outside for 200ms
+//  - click is a no-op (no toggle), preventing the abrupt open/close glitch
+(function() {
+  var DROPDOWN_SEL = '.secondary-nav__dropdown';
+  var CLOSE_DELAY = 200;
+  document.querySelectorAll(DROPDOWN_SEL).forEach(function(wrap) {
+    var closeTimer = null;
+    var btn = wrap.querySelector('.secondary-nav__dropdown-btn');
+
+    function open() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      wrap.classList.add('is-open');
+      if (btn) btn.setAttribute('aria-expanded', 'true');
+    }
+    function scheduleClose() {
+      if (closeTimer) clearTimeout(closeTimer);
+      closeTimer = setTimeout(function() {
+        wrap.classList.remove('is-open');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+      }, CLOSE_DELAY);
+    }
+    wrap.addEventListener('mouseenter', open);
+    wrap.addEventListener('mouseleave', scheduleClose);
+    // Keyboard focus opens too
+    wrap.addEventListener('focusin', open);
+    wrap.addEventListener('focusout', function(e) {
+      if (!wrap.contains(e.relatedTarget)) scheduleClose();
     });
-  }
-});
+  });
+})();
+// Legacy no-op so the inline onclick on the button doesn't error
+function toggleExamplesDropdown(btn) { /* hover-driven now */ }
 </script>
 </body>
 </html>
