@@ -11,19 +11,19 @@
 /* ── Local Space Grotesk + Space Mono ── */
 @font-face {
   font-family: 'Space Grotesk';
-  font-weight: 300;
+  font-weight: 600;
   src: url('fonts/SpaceGrotesk-Light.ttf') format('truetype');
   font-display: swap;
 }
 @font-face {
   font-family: 'Space Grotesk';
-  font-weight: 400;
+  font-weight: 600;
   src: url('fonts/SpaceGrotesk-Regular.ttf') format('truetype');
   font-display: swap;
 }
 @font-face {
   font-family: 'Space Grotesk';
-  font-weight: 500;
+  font-weight: 600;
   src: url('fonts/SpaceGrotesk-Medium.ttf') format('truetype');
   font-display: swap;
 }
@@ -206,7 +206,7 @@ a { text-decoration: none; color: inherit; }
 .blog-big-title {
   font-family: var(--font-display);
   font-size: 120px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.0;
   letter-spacing: -0.04em;
   color: var(--black);
@@ -266,7 +266,7 @@ a { text-decoration: none; color: inherit; }
 .section-title {
   font-family: var(--font-display);
   font-size: 48px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
@@ -492,7 +492,7 @@ a { text-decoration: none; color: inherit; }
 .editors-title {
   font-family: var(--font-display);
   font-size: 44px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
@@ -522,7 +522,7 @@ a { text-decoration: none; color: inherit; }
 .subscribe-text h3 {
   font-family: var(--font-display);
   font-size: 28px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 6px;
 }
 .subscribe-text p {
@@ -669,7 +669,7 @@ footer {
   gap: 7px;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: rgba(255,255,255,0.7);
   text-decoration: none;
   transition: color 0.15s;
@@ -1198,9 +1198,16 @@ footer {
 .fig-author-row {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  flex-wrap: wrap;
+  gap: 0;
   margin-top: var(--space-1);
 }
+/* Tight inside one author: 4px between avatar and its name */
+.fig-author-row .fig-avatar + .fig-author-name { margin-left: 4px; }
+/* 12px between authors: a new avatar that comes after another author's name */
+.fig-author-row .fig-author-name + .fig-avatar { margin-left: 12px; }
+/* When divider sits between author and date, keep it visually balanced */
+.fig-author-row .fig-divider { margin: 0 var(--space-2, 8px); }
 .fig-avatar {
   width: 18px;
   height: 18px;
@@ -1219,7 +1226,6 @@ footer {
   font-size: 13px;
   line-height: 14.31px;
   color: #2f2f2f;
-  margin-left: 4px;
 }
 .fig-divider {
   width: 1px;
@@ -1619,6 +1625,7 @@ footer {
 .section-strip {
   background: transparent;
   margin: var(--space-32) 0 120px;
+  margin-bottom: 64px;
 }
 .section-strip:first-of-type { margin-top: var(--space-16); }
 .section-strip-inner {
@@ -1639,7 +1646,7 @@ footer {
 }
 .section-strip-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 72px;
+  font-size: 64px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--black);
@@ -1649,12 +1656,12 @@ footer {
 }
 .section-strip-slash {
   color: var(--black);
-  font-weight: 600;                                     /* match title weight */
+  font-weight: 800;                                     /* match title weight */
   margin-right: 12px;
   opacity: 1;
   font-family: 'Space Grotesk', var(--font-mono), monospace;
-  font-size: 60px;                                      /* matches title; baseline-align handles cap-height visual */
-  line-height: 1.05;                                    /* match title line-height */
+  font-size: 51px;                                      /* matches title; baseline-align handles cap-height visual */
+  line-height: 1.1;                                    /* match title line-height */
 }
 .section-strip-link {
   display: inline-flex;
@@ -1662,7 +1669,7 @@ footer {
   gap: 8px;
   font-family: 'Space Grotesk', var(--font-mono), monospace;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #F35D00;
@@ -1696,7 +1703,7 @@ footer {
 .fp-hd-title {
   font-family: 'Space Grotesk', monospace;
   font-size: 38px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1;
   letter-spacing: -0.01em;
   color: #cec0ad;
@@ -3215,9 +3222,9 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <div class="secondary-nav__dropdown">
         <button class="secondary-nav__section secondary-nav__dropdown-btn" type="button" onclick="toggleExamplesDropdown(this)" aria-haspopup="true" aria-expanded="false">Examples <svg class="secondary-nav__chev" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="2,3 8,3 5,7" fill="currentColor"/></svg></button>
         <div class="secondary-nav__menu" role="menu">
-          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem"><span class="secondary-nav__menu-num">01</span><span class="secondary-nav__menu-label">Apps</span></a>
-          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem"><span class="secondary-nav__menu-num">02</span><span class="secondary-nav__menu-label">Notebook</span></a>
-          <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem"><span class="secondary-nav__menu-num">03</span><span class="secondary-nav__menu-label">Glossary</span></a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-examples-apps.html" role="menuitem"><span class="secondary-nav__menu-num">01</span><span class="secondary-nav__menu-label">Apps</span></a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-examples-notebook.html" role="menuitem"><span class="secondary-nav__menu-num">02</span><span class="secondary-nav__menu-label">Notebook</span></a>
+          <a class="secondary-nav__menu-opt" href="sunny-elastic-glossary.html" role="menuitem"><span class="secondary-nav__menu-num">03</span><span class="secondary-nav__menu-label">Glossary</span></a>
         </div>
       </div>
       <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integration</a>
