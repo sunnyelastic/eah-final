@@ -12,19 +12,19 @@
 /* ── Local Space Grotesk + Space Mono ── */
 @font-face {
   font-family: 'Space Grotesk';
-  font-weight: 300;
+  font-weight: 600;
   src: url('fonts/SpaceGrotesk-Light.ttf') format('truetype');
   font-display: swap;
 }
 @font-face {
   font-family: 'Space Grotesk';
-  font-weight: 400;
+  font-weight: 600;
   src: url('fonts/SpaceGrotesk-Regular.ttf') format('truetype');
   font-display: swap;
 }
 @font-face {
   font-family: 'Space Grotesk';
-  font-weight: 500;
+  font-weight: 600;
   src: url('fonts/SpaceGrotesk-Medium.ttf') format('truetype');
   font-display: swap;
 }
@@ -179,15 +179,15 @@ a { text-decoration: none; color: inherit; }
 .article-page__back svg { width: 14px; height: 14px; }
 
 /* Head block */
-.article-page__head { margin-bottom: var(--space-16); }   /* 64px */
+.article-page__head { margin-bottom: 48px; }   /* 64px */
 .article-page__title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 72px;            /* H1 */
+  font-size: 64px;            /* H1 */
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--black);
-  margin: 0 0 var(--space-8);
+  margin: 0 0 24px;
 }
 .article-page__lede {
   font-family: var(--font-body);
@@ -209,9 +209,12 @@ a { text-decoration: none; color: inherit; }
 .article-page__meta {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  column-gap: var(--space-24, 96px);     /* 96px between nav and article */
+  column-gap: var(--space-24, 96px);
   row-gap: var(--space-8);
   align-items: start;
+  padding-top: 24px;
+  border-top: 2px dotted var(--black);
+  margin-top: 32px;
 }
 .meta-group { display: flex; flex-direction: column; gap: 10px; }
 .meta-label {
@@ -343,7 +346,7 @@ a { text-decoration: none; color: inherit; }
 }
 .article-page__content h2 {
   font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 36px;           /* H4 */
   line-height: 1.2;
   letter-spacing: -0.04em;
@@ -491,7 +494,7 @@ footer {
   gap: 7px;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: rgba(255,255,255,0.7);
   text-decoration: none;
   transition: color 0.15s;
