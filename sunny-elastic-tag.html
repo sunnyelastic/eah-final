@@ -3056,7 +3056,7 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 <nav class="secondary-nav" aria-label="Secondary">
   <div class="secondary-nav__inner">
     <div class="secondary-nav__bar">
-      <a class="secondary-nav__lab secondary-nav__lab--es is-active" href="sunny-elastic-home.html">Elasticsearch Labs</a>
+      <a class="secondary-nav__lab secondary-nav__lab--es" href="sunny-elastic-home.html">Elasticsearch Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--obs" href="sunny-elastic-observability.html">Observability Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--sec" href="sunny-elastic-security.html">Security Labs</a>
       <a class="secondary-nav__lab secondary-nav__lab--news" href="#">News</a>
@@ -3072,7 +3072,7 @@ a.blog-filter-opt--has-submenu:focus-visible span {
           <a class="secondary-nav__menu-opt" href="sunny-elastic-home.html#examples" role="menuitem"><span class="secondary-nav__menu-num">03</span><span class="secondary-nav__menu-label">Glossary</span></a>
         </div>
       </div>
-      <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integration</a>
+      <a class="secondary-nav__section" href="sunny-elastic-home.html#integration">Integrations</a>
       <a class="secondary-nav__section secondary-nav__github" href="https://github.com/elastic/elasticsearch-labs" target="_blank" rel="noopener">GitHub <svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="external-icon"><path d="M3 2H10V9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/><path d="M10 2L3 9" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></a>
     </div>
   </div>
@@ -3090,7 +3090,7 @@ a.blog-filter-opt--has-submenu:focus-visible span {
 <div class="blog-filter-area">
   <span class="blog-filter-by-label">Filter by</span>
   <div class="blog-filter-row">
-    <div class="blog-filter" data-filter="blog" data-default-label="All">
+    <div class="blog-filter is-filtered" data-filter="blog" data-default-label="All">
     <button class="blog-filter-btn" onclick="toggleBlogFilter(this)">
       <span class="blog-filter-clear" onclick="clearFilter(event, this)" role="button" aria-label="Clear filter" tabindex="0">
         <svg viewBox="0 0 10 10" width="8" height="8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -3105,22 +3105,22 @@ a.blog-filter-opt--has-submenu:focus-visible span {
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Observability Labs&#39;)">Observability Labs</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;Security Labs&#39;)">Security Labs</a>
       <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;News&#39;)">News</a>
-      <a href="#" class="blog-filter-opt" onclick="selectFilter(event, &#39;All&#39;)">All</a>
+      <a href="#" class="blog-filter-opt is-active" onclick="selectFilter(event, &#39;All&#39;)">All</a>
     </div>
   </div>
-    <div class="blog-filter" data-filter="categories" data-default-label="Categories">
+    <div class="blog-filter is-filtered" data-filter="categories" data-default-label="Category">
     <button class="blog-filter-btn" onclick="toggleBlogFilter(this)">
       <span class="blog-filter-clear" onclick="clearFilter(event, this)" role="button" aria-label="Clear filter" tabindex="0">
         <svg viewBox="0 0 10 10" width="8" height="8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M2 2 L8 8 M8 2 L2 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
         </svg>
       </span>
-      <span class="blog-filter-label">Categories</span>
+      <span class="blog-filter-label">AI</span>
       <svg class="blog-filter-chev" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><polygon points="2,4 10,4 6,9" fill="currentColor"/></svg>
     </button>
     <div class="blog-filter-menu">
       <div class="blog-filter-opt-wrap">
-        <a href="#" class="blog-filter-opt blog-filter-opt--has-submenu" onclick="selectFilter(event, &#39;AI&#39;)">
+        <a href="#" class="blog-filter-opt blog-filter-opt--has-submenu is-active" onclick="selectFilter(event, &#39;AI&#39;)">
           <span>AI</span>
           <svg class="blog-filter-opt-flyarrow" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="3,2 8,5 3,8" fill="currentColor"/></svg>
         </a>
@@ -3756,12 +3756,20 @@ document.addEventListener('click', function(e) {
         tag.replace(/'/g, "\\'") + "')");
     }
   });
-  // Highlight matching Categories dropdown option + update label
+  // Highlight matching Categories dropdown option + show as filtered with X
+  const catFilter = document.querySelector('.blog-filter[data-filter="categories"]');
+  if (catFilter) {
+    // Reset any prior is-active selections (default markup pre-selects AI)
+    catFilter.querySelectorAll('.blog-filter-opt.is-active').forEach(function(el) {
+      el.classList.remove('is-active');
+    });
+  }
   document.querySelectorAll('.blog-filter[data-filter="categories"] .blog-filter-opt').forEach(function(opt) {
     if (opt.textContent.trim().toLowerCase() === tag.toLowerCase()) {
       opt.classList.add('is-active');
+      if (catFilter) catFilter.classList.add('is-filtered');
       const lbl = document.querySelector('.blog-filter[data-filter="categories"] .blog-filter-label');
-      if (lbl) lbl.textContent = 'Categories: ' + tag;
+      if (lbl) lbl.textContent = tag;
     }
   });
 })();
